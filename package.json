@@ -1,0 +1,22 @@
+{
+  "name": "jwt2706.github.io",
+  "version": "1.0.0",
+  "description": "mah websiteeee",
+  "main": "main.js",
+  "scripts": {
+    "test": "npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwt2706/jwt2706.github.io.git"
+  },
+  "author": "jwt2706",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/jwt2706/jwt2706.github.io/issues"
+  },
+  "homepage": "https://github.com/jwt2706/jwt2706.github.io#readme",
+  "dependencies": {
+    "three": "^0.160.0"
+  }
+}
