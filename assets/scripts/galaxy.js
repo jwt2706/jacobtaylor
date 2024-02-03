@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 const PARTICLE_COUNT = 1000;
 const INIT_CAMERA_POS = 500;
 
