@@ -1,20 +1,21 @@
-const output = document.getElementById("output");
-const commandInput = document.getElementById("command");
+function autoType(elementId, typingSpeed, text) {
+  let textArray = text.split("");
+  let inputElement = document.getElementById(elementId);
+  let index = 0;
 
-commandInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    const command = commandInput.value;
-    output.innerHTML += `<div><span class="prompt">$ </span>${command}</div>`;
-    commandInput.value = "";
-    // Handle the command and execute corresponding actions
-    handleCommand(command);
-  }
-});
-
-function handleCommand(command) {
-  // You can define your own logic here to handle different commands
-  // For example, you can execute shell commands using AJAX or fetch API
-  // and display the output in the terminal-like interface
-  output.innerHTML += `<div>${command}: command not found</div>`;
+  let typingInterval = setInterval(() => {
+      if (index < textArray.length) {
+          inputElement.value += textArray[index];
+          index++;
+      } else {
+          clearInterval(typingInterval);
+      }
+  }, typingSpeed);
 }
+
+// Call the function with the id of your input field, the typing speed in milliseconds, and the text to type
+autoType("input", 100, "Hello, world!");
+
+
+
+//its the jsut wrong element id... maybe convert to react????

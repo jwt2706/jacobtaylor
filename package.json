@@ -21,6 +21,8 @@
   "homepage": "https://github.com/jwt2706/jwt2706.github.io#readme",
   "dependencies": {
     "gh-pages": "^6.1.1",
+    "sass": "^1.71.1",
+    "tailwindcss": "^3.4.1",
     "three": "^0.160.1",
     "vite": "^5.0.12"
   }
