@@ -2,7 +2,7 @@
 $font-color: #fff;
 $font-family: monospace;
 $font-size: 16px;
-$terminal-height: 30%;
+$terminal-height: 35vh;
 
 
 @keyframes terminalOpen {
@@ -21,7 +21,7 @@ $terminal-height: 30%;
     bottom: 0; // Move terminal to the bottom
     left: 50%; // Center terminal horizontally
     transform: translateX(-50%); // Adjust for terminal width
-    width: 35%;
+    width: 30vw;
     height: $terminal-height;
     background-color: rgba(0, 0, 0, 0.7);
     color: $font-color;
