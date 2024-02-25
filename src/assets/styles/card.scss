@@ -1,0 +1,28 @@
+.card {
+  width: 300px;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px) rotate(-10deg);
+  transition: opacity 0.5s, transform 0.5s;
+  transition-delay: 0s;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.card.animate {
+  opacity: 1;
+  transform: translateY(0) rotate(0);
+}
+
+.card:hover {
+  transform: scale(1.05) rotate(5deg);
+}

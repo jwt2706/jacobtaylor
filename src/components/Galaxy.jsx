@@ -55,7 +55,18 @@ export default function Galaxy() {
     // scroll movement
     function onScroll(event) {
       const delta = Math.sign(event.deltaY);
-      camera.position.z += delta;
+      const scrollPosition = window.scrollY;
+      const scrollHeight = document.body.scrollHeight - window.innerHeight;
+
+      // If we're at the top and scrolling up, or at the bottom and scrolling down, don't move the camera
+      if (
+        (scrollPosition === 0 && delta < 0) ||
+        (scrollPosition === scrollHeight && delta > 0)
+      ) {
+        return;
+      }
+
+      camera.position.z -= delta * 8;
     }
 
     window.addEventListener("wheel", onScroll, false);
