@@ -15,57 +15,59 @@ function App() {
 
   return (
     <>
-      <AnimatedCursor
-        innerSize={20}
-        outerSize={16}
-        color="265, 265, 265"
-        outerAlpha={0.2}
-        innerScale={0.7}
-        outerScale={5}
-        clickables={[
-          "a",
-          'input[type="text"]',
-          'input[type="email"]',
-          'input[type="number"]',
-          'input[type="submit"]',
-          'input[type="image"]',
-          "label[for]",
-          "select",
-          "textarea",
-          "button",
-          ".link",
-          {
-            target: ".custom",
-            options: {
-              innerSize: 12,
-              outerSize: 12,
-              color: "255, 255, 255",
-              outerAlpha: 0.3,
-              innerScale: 0.7,
-              outerScale: 5,
+      <div className="scrollable">
+        <AnimatedCursor
+          innerSize={20}
+          outerSize={16}
+          color="265, 265, 265"
+          outerAlpha={0.2}
+          innerScale={0.7}
+          outerScale={5}
+          clickables={[
+            "a",
+            'input[type="text"]',
+            'input[type="email"]',
+            'input[type="number"]',
+            'input[type="submit"]',
+            'input[type="image"]',
+            "label[for]",
+            "select",
+            "textarea",
+            "button",
+            ".link",
+            {
+              target: ".custom",
+              options: {
+                innerSize: 12,
+                outerSize: 12,
+                color: "255, 255, 255",
+                outerAlpha: 0.3,
+                innerScale: 0.7,
+                outerScale: 5,
+              },
             },
-          },
-        ]}
-      />
-      <div>
-        <img src={favicon} className="logo" alt="favicon logo" />
+          ]}
+        />
+        <div>
+          <img src={favicon} className="logo" alt="favicon logo" />
+        </div>
+        <h1>Hey, I'm Jacob</h1>
+        <p>
+          <code>I write code.</code>
+        </p>
+        <div className="card">
+          <button onClick={createTerminal}>Open terminal</button>
+        </div>
+        <p className="scroll-prompt">
+          <span className="down-arrows">↓</span> Checkout my stuff!
+          <span className="down-arrows"> ↓</span>
+        </p>
+        {showTerminal && ( // Only render the Terminal if showTerminal is true
+          <Draggable>
+            <Terminal />
+          </Draggable>
+        )}
       </div>
-      <h1>Hey, I'm Jacob</h1>
-      <p>
-        <code>I write code.</code>
-      </p>
-      <div className="card">
-        <button onClick={createTerminal}>Open terminal</button>
-      </div>
-      <p className="scroll-prompt">
-        <span className="down-arrows">↓</span> Checkout my stuff!
-        <span className="down-arrows"> ↓</span>
-      </p>
-      {showTerminal && ( // Only render the Terminal if showTerminal is true
-        <Draggable>
-          <Terminal />
-        </Draggable>
-      )}
       <Galaxy className="background" />
     </>
   );
