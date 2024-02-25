@@ -34,8 +34,20 @@
   padding: 2em;
 }
 
-.read-the-docs {
+.scroll-prompt {
+  overflow: auto;
   color: #888;
+  max-height: 100px; // Adjust this to control when the scrolling starts
+
+  .down-arrows {
+    display: inline-block;
+    animation: bobbing 1s ease-in-out infinite;
+  }
+}
+
+@keyframes bobbing {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); } // Adjust this to control the bobbing distance
 }
 
 $random-angle: random(360) + deg;

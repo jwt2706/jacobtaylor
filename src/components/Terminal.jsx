@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import "../assets/styles/terminal.scss";
 
 const commands = [
+  "ls",
   "cd projects",
   "ls",
-  "cd my-project",
-  "npm start",
+  "",
   // Add more commands here
 ];
 
