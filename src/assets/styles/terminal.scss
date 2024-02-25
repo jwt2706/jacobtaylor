@@ -1,25 +1,9 @@
-$background-color: linear-gradient(180deg, #14203b, #010314);
-$terminal-bg-color: rgba(0, 0, 0, 0.7);
+
 $font-color: #fff;
 $font-family: monospace;
 $font-size: 16px;
-$prompt-color: #0f0;
-$terminal-width: 38%;
 $terminal-height: 30%;
 
-body {
-    margin: 0;
-    overflow: hidden;
-    background: $background-color;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100vh;
-}
-
-canvas { 
-    display: block; 
-}
 
 @keyframes terminalOpen {
     0% {
@@ -32,12 +16,14 @@ canvas {
     }
 }
 
-#terminal {
+.terminal {
     position: absolute;
-    top: 10%;
-    width: $terminal-width;
+    bottom: 0; // Move terminal to the bottom
+    left: 50%; // Center terminal horizontally
+    transform: translateX(-50%); // Adjust for terminal width
+    width: 35%;
     height: $terminal-height;
-    background-color: $terminal-bg-color;
+    background-color: rgba(0, 0, 0, 0.7);
     color: $font-color;
     z-index: 9999;
     display: flex;
@@ -49,17 +35,17 @@ canvas {
     border-radius: 10px;
     animation: terminalOpen 1s ease-out;
 
-    #input {
+    .input {
         display: flex;
         align-items: center;
         padding: 10px;
     }
 
-    #prompt {
-        color: $prompt-color;
+    .prompt {
+        color: #0f0;
     }
 
-    #command {
+    .command {
         background-color: transparent;
         border: none;
         outline: none;
