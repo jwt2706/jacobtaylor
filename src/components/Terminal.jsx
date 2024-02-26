@@ -13,6 +13,15 @@ const commands = [
 function Terminal() {
   const [currentCommandIndex, setCurrentCommandIndex] = useState(0);
   const [currentCommand, setCurrentCommand] = useState("");
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  if (!isOpen) {
+    return null;
+  }
 
   useEffect(() => {
     let commandInterval;
@@ -49,6 +58,9 @@ function Terminal() {
 
   return (
     <div className="terminal">
+      <button onClick={handleClose} className="close-button">
+        x
+      </button>
       <div className="input">
         <span className="prompt">root@jwt2706.ca:~$ </span>
         <span className="command">

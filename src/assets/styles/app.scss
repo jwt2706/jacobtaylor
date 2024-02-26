@@ -8,6 +8,11 @@ $random-angle: random(360) + deg;
   text-align: center;
 }
 
+p{
+  color: #ffffff;
+
+}
+
 .app {
   display: flex;
   flex-direction: column;

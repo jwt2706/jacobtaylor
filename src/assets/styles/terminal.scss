@@ -54,4 +54,16 @@ $terminal-height: 35vh;
         font-size: $font-size;
         margin-left: 5px;
     }
+
+    .close-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.5em;
+        padding: 0.5em;
+        cursor: pointer;
+      }
 }
