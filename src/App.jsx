@@ -59,7 +59,7 @@ function App() {
         <p>
           <code className="text-highlight">I write code.</code>
         </p>
-        <div className="block">
+        <div className="block terminal-button">
           <button onClick={createTerminal}>Open terminal</button>
         </div>
         <p className="scroll-prompt">

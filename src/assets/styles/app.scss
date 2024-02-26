@@ -58,6 +58,12 @@ $random-angle: random(360) + deg;
   padding: 2em;
 }
 
+.terminal-button {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 .projects-title {
   text-align: center;
   font-size: 2em;
