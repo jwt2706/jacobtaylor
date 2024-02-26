@@ -9,10 +9,18 @@ import image1 from "./assets/images/a.jpg";
 import "./assets/styles/app.scss";
 
 function App() {
-  const [showTerminal, setShowTerminal] = useState(false);
-
+  const [terminals, setTerminals] = useState([]);
   const createTerminal = () => {
-    setShowTerminal(true); // Show the Terminal when the button is clicked
+    console.log(window.innerHeight, window.innerWidth);
+    const top = Math.random() * window.innerHeight;
+    const left = Math.random() * window.innerWidth;
+
+    setTerminals((prevTerminals) => [
+      ...prevTerminals,
+      <Draggable key={prevTerminals.length} initialPos={{ x: left, y: top }}>
+        <Terminal />
+      </Draggable>,
+    ]);
   };
 
   return (
@@ -59,9 +67,12 @@ function App() {
             <code className="text-highlight">I write code.</code>
           </p>
           <div className="block terminal-button">
-            <button onClick={createTerminal}>Open terminal</button>
+            <button onClick={createTerminal}>
+              Open terminal ({terminals.length})
+            </button>
           </div>
         </div>
+        <div>{terminals}</div>
         <div className="logo-container">
           <a
             href="https://github.com/jwt2706"
@@ -155,14 +166,6 @@ function App() {
           <span className="down-arrows">↓</span> Checkout my stuff!
           <span className="down-arrows"> ↓</span>
         </p>
-
-        <div>
-          {showTerminal && ( // Only render the Terminal if showTerminal is true
-            <Draggable>
-              <Terminal />
-            </Draggable>
-          )}
-        </div>
         <div className="projects grid">
           <h2 className="projects-title underline-animation">Things I Built</h2>
           <ProjectCard

@@ -11,17 +11,9 @@ const commands = [
 ];
 
 function Terminal() {
+  const [isOpen, setIsOpen] = useState(true);
   const [currentCommandIndex, setCurrentCommandIndex] = useState(0);
   const [currentCommand, setCurrentCommand] = useState("");
-  const [isOpen, setIsOpen] = useState(true);
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  if (!isOpen) {
-    return null;
-  }
 
   useEffect(() => {
     let commandInterval;
@@ -48,13 +40,21 @@ function Terminal() {
           });
         }, 1000);
       }
-    }, 100); // Type each letter every 100ms
+    }, 100);
 
     return () => {
       clearInterval(typingInterval);
       clearInterval(commandInterval);
     }; // Clean up on unmount
   }, [currentCommand, currentCommandIndex]);
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div className="terminal">

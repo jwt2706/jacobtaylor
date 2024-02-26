@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function Draggable(props) {
+function Draggable({ children, initialPos }) {
   const [pos, setPos] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
+    x: initialPos ? initialPos.x : window.innerWidth / 2,
+    y: initialPos ? initialPos.y : window.innerHeight / 2,
   });
   const [dragging, setDragging] = useState(false);
   const [rel, setRel] = useState(null); // position relative to the cursor
@@ -34,6 +34,13 @@ function Draggable(props) {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    setPos({
+      x: initialPos ? initialPos.x : window.innerWidth / 2,
+      y: initialPos ? initialPos.y : window.innerHeight / 2,
+    });
+  }, [initialPos]);
+
   return (
     <div
       onMouseDown={onMouseDown}
@@ -41,7 +48,7 @@ function Draggable(props) {
       onMouseMove={onMouseMove}
       style={{ position: "absolute", left: pos.x, top: pos.y }}
     >
-      {props.children}
+      {children}
     </div>
   );
 }
