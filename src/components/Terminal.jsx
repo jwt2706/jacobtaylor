@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import "../assets/styles/terminal.scss";
 
 const commands = [
-  "ls",
-  "cd projects",
-  "ls",
-  "",
+  "Hey!",
+  "Try to drag me around",
+  "Check out my projects",
+  "And my github",
+  "Send me mail!",
   // Add more commands here
 ];
 

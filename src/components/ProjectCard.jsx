@@ -7,7 +7,7 @@ function ProjectCard({ title, description, imageUrl }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Here, entry.isIntersecting will be true if the element is in the viewport
+        // entry.isIntersecting will be true if the element is in the viewport
         if (entry.isIntersecting) {
           entry.target.classList.add("animate");
         } else {
