@@ -58,13 +58,27 @@ $random-angle: random(360) + deg;
   padding: 2em;
 }
 
+.projects-title {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+
 .projects {
-  margin-top:40vh;
+  margin-top:50vh;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   justify-items: center;
   align-items: center;
+}
+
+.projects.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
 }
 
 .scroll-prompt {
@@ -90,22 +104,10 @@ $random-angle: random(360) + deg;
     #131e37 5%, 
     #131d35 10%, 
     #121b32 15%, 
-    #121a30 20%, 
-    #11192e 25%, 
     #11182c 30%, 
-    #10162a 35%, 
-    #0f1527 40%, 
     #0f1425 45%, 
-    #0e1223 50%, 
-    #0d1121 55%, 
     #0c0f1f 60%, 
-    #0a0e1d 65%, 
-    #080c1b 70%, 
-    #070919 75%, 
     #050717 80%, 
-    #030515 85%, 
-    #010313 90%, 
-    #010313 95%, 
     #010313 100%);
   background-size: 200% 200%;
   animation: Gradient 15s ease infinite alternate;

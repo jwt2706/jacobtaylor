@@ -5,6 +5,7 @@ import Draggable from "./components/Draggable";
 import ProjectCard from "./components/ProjectCard";
 import AnimatedCursor from "react-animated-cursor";
 import favicon from "./assets/icons/planet-512.png";
+import image1 from "./assets/images/a.jpg";
 import "./assets/styles/app.scss";
 
 function App() {
@@ -70,22 +71,23 @@ function App() {
             <Terminal />
           </Draggable>
         )}
-        <div className="projects">
+        <div className="projects grid">
+          <h2 className="projects-title underline-animation">Things I Built</h2>
           <ProjectCard
             title="Project 1"
             description="This is a description of Project 1."
-            imageUrl="../assets/images/a.jpg"
+            imageUrl={image1}
           />
           <ProjectCard
             title="Project 2"
             description="This is a description of Project 2."
-            imageUrl="url-to-image-of-project-2"
+            imageUrl={image1}
           />
           {/* Add more ProjectCards as needed */}
         </div>
       </main>
       <footer className="text-highlight">
-        <code>Made with &lt;3 github@jwt2706 (c) 2024</code>
+        <code>Made with &lt;3 (c) jwt2706 {new Date().getFullYear()}</code>
       </footer>
       <Galaxy className="background" />
     </div>

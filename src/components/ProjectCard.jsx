@@ -32,8 +32,8 @@ function ProjectCard({ title, description, imageUrl }) {
   return (
     <div className="card" ref={cardRef}>
       <img src={imageUrl} alt={title} />
-      <h2>{title}</h2>
-      <p>{description}</p>
+      <h2 className="title">{title}</h2>
+      <p className="description">{description}</p>
     </div>
   );
 }
