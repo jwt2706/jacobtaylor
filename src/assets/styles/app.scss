@@ -25,10 +25,6 @@ p{
   margin-top: 10%;
 }
 
-.block {
-  padding: 2em;
-}
-
 .text-highlight {
   background-color: #2b2b2b;
   border-radius: 5px;
@@ -58,38 +54,31 @@ p{
   }
 }
 
+.logo-container {
+  display: flex;
+
+}
+
 .logo {
   height: 6em;
-  padding: 1.5em;
   will-change: filter;
-  transition: filter 300ms;
+  transition: filter 0.4s;
 
   &:hover {
     filter: drop-shadow(0 0 1em #00397ad0);
   }
 
   &.svg{
-    width: 50%;
-    height: 50%;
+    width: 30%;
+    height: 30%;
   }
-}
-
-.svg {
-  transition: transform 0.3s ease;
-  
-  &:hover {
-    transform: rotate(0deg);
-  }
-}
-
-.logo-container {
-  display: flex;
 }
 
 .terminal-button {
   position: fixed;
   top: 0;
   left: 0;
+  padding: 2em;
 }
 
 .projects-title {
@@ -142,15 +131,6 @@ p{
   animation: Gradient 15s ease infinite alternate;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes bobbing {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -162,12 +142,6 @@ p{
   }
   100% {
     background-position: 0% 50%;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .svg {
-    animation: logo-spin infinite 20s linear;
   }
 }
 
