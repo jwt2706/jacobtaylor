@@ -54,19 +54,12 @@ p{
   }
 }
 
-.logo-container {
-  display: flex;
-
-}
-
 .logo {
   height: 6em;
   will-change: filter;
   transition: filter 0.4s;
-
-  &:hover {
-    filter: drop-shadow(0 0 1em #00397ad0);
-  }
+  filter: drop-shadow(0 0 1em #00397ad0);
+  
 
   &.svg{
     width: 30%;
