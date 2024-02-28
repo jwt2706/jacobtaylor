@@ -89,8 +89,10 @@ function App() {
         </div>
         <div>{terminals}</div>
         <LinksCard />
-        <div className="projects grid">
-          <h2 className="projects-title underline-animation">Things I Built</h2>
+        <div className="projects grid md:grid-cols-2 gap-4">
+          <h2 className="projects-title underline-animation col-span-full">
+            Things I Built
+          </h2>
           <ProjectCard
             title="Project 1"
             description="This is a description of Project 1."

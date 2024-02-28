@@ -1,4 +1,5 @@
 $scroll-amount: 500vh;
+$projects-offset: 20vh;
 $random-angle: random(360) + deg;
 
 #root {
@@ -81,14 +82,9 @@ p{
   letter-spacing: 2px;
 }
 
-.projects,
-.projects.grid {
-  margin-top:50vh;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  justify-items: center;
-  align-items: center;
+
+.projects {
+  margin-top: $projects-offset;
 }
 
 .scroll-prompt {
@@ -110,10 +106,10 @@ p{
   height: 100%;
   z-index: -1;
   background: linear-gradient(#{$random-angle}, 
-    #141f39 0%, 
-    #131e37 5%, 
-    #131d35 10%, 
-    #121b32 15%, 
+    #1f3058 0%, 
+    #172544 5%, 
+    #15203a 10%, 
+    #131d38 15%, 
     #11182c 30%, 
     #0f1425 45%, 
     #0c0f1f 60%, 
