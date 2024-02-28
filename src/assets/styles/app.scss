@@ -59,7 +59,6 @@ p{
   will-change: filter;
   transition: filter 0.4s;
   filter: drop-shadow(0 0 1em #00397ad0);
-  
 
   &.svg{
     width: 30%;
@@ -136,12 +135,4 @@ p{
   100% {
     background-position: 0% 50%;
   }
-}
-
-footer {
-  text-align: center;
-  padding: 5%;
-  margin-left:10%;
-  margin-right:10%;
-  color: #ffffff;
 }

@@ -63,10 +63,7 @@ function App() {
           ]}
         />
         <div>
-          <div
-            className="logo flex justify-center items-center"
-            alt="favicon logo"
-          >
+          <div className="flex justify-center items-center" alt="favicon logo">
             <img
               src={favicon}
               className="w-24 h-24 rounded-full shadow-lg"
@@ -107,7 +104,7 @@ function App() {
           {/* Add more ProjectCards as needed */}
         </div>
       </main>
-      <footer className="text-highlight">
+      <footer>
         <code>Made with &lt;3 (c) jwt2706 {new Date().getFullYear()}</code>
       </footer>
       <Galaxy className="background" />

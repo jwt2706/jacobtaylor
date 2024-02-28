@@ -110,7 +110,8 @@ export function LinksCard() {
           as="p"
           className="scroll-prompt text-neutral-500 text-sm max-w-sm mt-2 mx-auto dark:text-neutral-300"
         >
-          <span className="down-arrows">↓</span> Scroll down to see a summary!
+          <span className="down-arrows">↓</span>
+          Scroll down to see some stuff I worked on!
           <span className="down-arrows">↓</span>
         </CardItem>
       </CardBody>
