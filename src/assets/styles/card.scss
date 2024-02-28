@@ -1,6 +1,7 @@
 .card {
   position: relative;
   width: 300px;
+  height: 300px;
   padding: 20px;
   margin: 20px;
   border-radius: 10px;
@@ -11,18 +12,17 @@
   transform: perspective(600px) rotateY(90deg);
   transition: opacity 0.5s, transform 0.5s;
   transition-delay: 0s;
-  overflow: hidden; // hide anything that goes outside the card boundaries
+  overflow: hidden;
 }
 
 .card img {
-  position: absolute; // position the image absolutely to cover the whole card
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
-  z-index: 1; // make sure the image is below the overlay
 }
 
 .card::before {
@@ -32,9 +32,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); // create a dark overlay
+  background: rgba(0, 0, 0, 0.5);
   transition: background 0.5s;
-  z-index: 2; // make sure the overlay is above the image
+  z-index: 2;
 }
 
 .card.animate {
@@ -43,11 +43,23 @@
   transition-delay:0.3s;
 }
 
-.card:hover {
-  transform: scale(1.05) rotate(2deg);
-  transition-delay: 0s;
+.card:hover::before {
+  background: rgba(0, 0, 0, 0);
 }
 
-.card:hover::before {
-  background: rgba(0, 0, 0, 0); // clear the overlay on hover
+@keyframes enter {
+  0% {
+    transform: perspective(700px) rotateY(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: perspective(700px) rotateY(20deg);
+    opacity: 1;
+  }
+}
+
+.card {
+  &.animate {
+    animation: enter 1s ease-out forwards;
+  }
 }

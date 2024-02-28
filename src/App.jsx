@@ -89,10 +89,12 @@ function App() {
         </div>
         <div>{terminals}</div>
         <LinksCard />
-        <div className="projects grid md:grid-cols-2 gap-4">
-          <h2 className="projects-title underline-animation col-span-full">
-            Things I Built
-          </h2>
+        <div className="projects grid md:grid-cols-3 gap-16 container mx-auto md:px-4">
+          <div className="col-span-full">
+            <h2 className="projects-title mx-auto">
+              <span className="underline-animation">Experiences</span>
+            </h2>
+          </div>
           <ProjectCard
             title="Project 1"
             description="This is a description of Project 1."
@@ -101,6 +103,16 @@ function App() {
           <ProjectCard
             title="Project 2"
             description="This is a description of Project 2."
+            imageUrl={image1}
+          />
+          <ProjectCard
+            title="Project 3"
+            description="This is a description of Project 3."
+            imageUrl={image1}
+          />
+          <ProjectCard
+            title="Project 4"
+            description="This is a description of Project 4."
             imageUrl={image1}
           />
           {/* Add more ProjectCards as needed */}

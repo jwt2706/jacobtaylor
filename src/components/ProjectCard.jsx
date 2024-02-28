@@ -25,15 +25,29 @@ function ProjectCard({ title, description, imageUrl }) {
       observer.observe(cardRef.current);
     }
 
-    // Clean up the observer when the component unmounts
+    // clean up the observer when the component unmounts
     return () => observer.unobserve(cardRef.current);
   }, []);
 
   return (
-    <div className="card" ref={cardRef}>
-      <img src={imageUrl} alt={title} />
-      <h2 className="title">{title}</h2>
-      <p className="description">{description}</p>
+    <div
+      className="card relative text-white p-4 rounded-lg shadow-lg transform transition duration-500 ease-in-out hover:rotate-3 w-64 group animate-enter"
+      style={{ paddingBottom: "100%" }}
+      ref={cardRef}
+    >
+      <img
+        src={imageUrl}
+        alt={title}
+        className="absolute inset-0 w-full h-full object-cover rounded-lg"
+      />
+      <div className="absolute inset-0 p-4 flex flex-col justify-between">
+        <h2 className="text-2xl font-bold transition duration-500 ease-in-out transform group-hover:scale-125">
+          {title}
+        </h2>
+        <p className="mt-2 opacity-0 group-hover:opacity-100 transition duration-500 ease-in-out">
+          {description}
+        </p>
+      </div>
     </div>
   );
 }
