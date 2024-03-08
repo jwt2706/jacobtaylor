@@ -52,14 +52,11 @@ function App() {
           </div>
           <br></br>
           <h1>
-            <span className="underline-animation">Hey, I'm Jacob</span>
+            <span className="text-4xl underline-animation">Hey, I'm Jacob</span>
           </h1>
           <br></br>
-          <p>
-            <code className="text-highlight">
-              I'm a bit of a technical hobbyist :D
-            </code>
-          </p>
+
+          <code className="text-gray-400">Software engineering undergrad.</code>
         </div>
         <LinksCard />
       </main>
