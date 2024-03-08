@@ -1,6 +1,5 @@
-$scroll-amount: 500vh;
-$projects-offset: 20vh;
-$random-angle: random(360) + deg;
+$scroll-amount: 100vh;
+$projects-offset: 0vh;
 
 #root {
   max-width: 1280px;
@@ -9,9 +8,22 @@ $random-angle: random(360) + deg;
   text-align: center;
 }
 
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
 p{
   color: #ffffff;
+}
 
+.favicon {
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50%;
+  background-color: rgba(201, 201, 201, 0.2);
+  padding: 1%;
 }
 
 .app {
@@ -105,16 +117,17 @@ p{
   width: 100%;
   height: 100%;
   z-index: -1;
-  background: linear-gradient(#{$random-angle}, 
-    #1f3058 0%, 
-    #172544 5%, 
-    #15203a 10%, 
-    #131d38 15%, 
-    #11182c 30%, 
-    #0f1425 45%, 
-    #0c0f1f 60%, 
-    #050717 80%, 
-    #010313 100%);
+  background: linear-gradient(180deg,
+    #1f3058 0%,
+    #2c4168 5%,
+    #243550 10%,
+    #1b2a45 15%,
+    #11182c 30%,
+    #0f1425 45%,
+    #090b1a 60%,
+    #03050f 80%,
+    #011313 100%);
+
   background-size: 200% 200%;
   animation: Gradient 15s ease infinite alternate;
 }

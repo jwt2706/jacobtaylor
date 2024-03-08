@@ -8,6 +8,7 @@ export default function Galaxy() {
     // constants
     const PARTICLE_COUNT = 1000;
     const INIT_CAMERA_POS = 500;
+    let targetZ = INIT_CAMERA_POS;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -66,7 +67,7 @@ export default function Galaxy() {
         return;
       }
 
-      camera.position.z -= delta * 8;
+      targetZ -= delta * 8;
     }
 
     window.addEventListener("wheel", onScroll, false);
@@ -80,6 +81,10 @@ export default function Galaxy() {
         (targetRotation.x - particleSystem.rotation.x) * 0.05;
       particleSystem.rotation.y +=
         (targetRotation.y - particleSystem.rotation.y) * 0.05;
+
+      // lerp camera position
+      camera.position.z += (targetZ - camera.position.z) * 0.05;
+
       renderer.render(scene, camera);
     }
 
