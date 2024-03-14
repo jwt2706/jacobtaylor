@@ -22,7 +22,7 @@
   "homepage": "https://github.com/jwt2706/jwt2706.github.io",
   "dependencies": {
     "clsx": "^2.1.0",
-    "framer-motion": "^11.0.6",
+    "framer-motion": "^11.0.12",
     "gh-pages": "^6.1.1",
     "react": "^18.2.0",
     "react-animated-cursor": "^2.11.2",
