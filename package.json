@@ -30,7 +30,7 @@
     "sass": "^1.71.1",
     "tailwind-merge": "^2.2.1",
     "three": "^0.160.1",
-    "vite": "^5.0.12"
+    "vite": "^5.1.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
