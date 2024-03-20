@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import GithubIcon from "../assets/icons/GithubIcon";
 
 function Sidebar() {
   const [repos, setRepos] = useState([]);
@@ -34,39 +33,37 @@ function Sidebar() {
   }, []);
 
   return (
-    <aside
-      className={`absolute left-0 top-0 h-screen w-64 bg-gray-800 bg-opacity-50 text-white p-6 transition-all duration-500 ${
-        isVisible ? "translate-x-0" : "-translate-x-full"
-      }`}
-    >
+    <div>
       <button
         onClick={() => setIsVisible(!isVisible)}
-        className="absolute top-0 right-0 m-4"
+        className="absolute top-0 left-0 m-4 z-10"
       >
         {isVisible ? "Hide" : "Show"}
       </button>
-      <br />
-      <h2 className="text-2xl mb-4">My Projects</h2>
-      <ul className="list-disc list-inside">
-        {repos.map((repo) => (
-          <li key={repo.id} className="mb-2 flex justify-between items-center">
-            <a
-              href={`https://jwt2706.github.io/${repo.name}`}
-              className="text-blue-400 hover:underline"
+      <aside
+        className={`absolute left-0 top-0 h-screen w-64 bg-gray-800 bg-opacity-50 text-white p-6 transition-all duration-500 ${
+          isVisible ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <br />
+        <h2 className="text-2xl mb-4">My Projects</h2>
+        <ul className="list-disc list-inside">
+          {repos.map((repo) => (
+            <li
+              key={repo.id}
+              className="mb-2 flex justify-between items-center"
             >
-              {humanize(repo.name)}
-            </a>
-            <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
-              <GithubIcon
-                width="4"
-                height="4"
+              <a
+                href={`https://jwt2706.github.io/${repo.name}`}
                 className="text-blue-400 hover:underline"
-              />
-            </a>
-          </li>
-        ))}
-      </ul>
-    </aside>
+              >
+                {humanize(repo.name)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
   );
 }
 
