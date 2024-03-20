@@ -1,8 +1,5 @@
-$scroll-amount: 100vh;
-$projects-offset: 0vh;
-
 #root {
-  max-width: 1280px;
+  max-width: full;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -16,15 +13,6 @@ html {
   display: none;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-p{
-  color: #ffffff;
-}
-
 .favicon {
   border-color: black;
   border-style: solid;
@@ -32,25 +20,6 @@ p{
   border-radius: 50%;
   background-color: rgba(201, 201, 201, 0.2);
   padding: 1%;
-}
-
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: $scroll-amount;
-}
-
-.scrollable {
-  overflow-y: auto;
-  height: $scroll-amount;
-  margin-top: 10%;
-}
-
-.text-highlight {
-  background-color: #686868;
-  opacity: 0.6;
-  border-radius: 5px;
-  padding: 5px;
 }
 
 .underline-animation {
@@ -80,42 +49,11 @@ p{
   height: 6em;
   will-change: filter;
   transition: filter 0.4s;
-  filter: drop-shadow(0 0 1em #00397ad0);
+  filter: drop-shadow(0 0 1em #005dc7d0);
 
   &.svg{
     width: 30%;
     height: 30%;
-  }
-}
-
-.terminal-button {
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 2em;
-}
-
-.projects-title {
-  text-align: center;
-  font-size: 2em;
-  margin-bottom: 20px;
-  color: #ffffff;
-  letter-spacing: 2px;
-}
-
-
-.projects {
-  margin-top: $projects-offset;
-}
-
-.scroll-prompt {
-  overflow: auto;
-  color: #888;
-  max-height: 100px;
-
-  .down-arrows {
-    display: inline-block;
-    animation: bobbing 1s ease-in-out infinite;
   }
 }
 
@@ -139,11 +77,6 @@ p{
 
   background-size: 200% 200%;
   animation: Gradient 15s ease infinite alternate;
-}
-
-@keyframes bobbing {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
 }
 
 @keyframes Gradient {

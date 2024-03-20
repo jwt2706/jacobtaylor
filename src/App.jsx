@@ -61,7 +61,7 @@ function App() {
         <LinksCard />
       </main>
       <footer>
-        <code>Made with &lt;3 (c) jwt2706 {new Date().getFullYear()}</code>
+        <code>Coded with care. (c) jwt2706 {new Date().getFullYear()}</code>
       </footer>
       <Galaxy className="background" />
     </div>

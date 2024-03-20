@@ -3,7 +3,7 @@ import { CardBody, CardContainer, CardItem } from "./Perspective";
 
 export function LinksCard() {
   return (
-    <CardContainer className="w-full sm:w-64 p-4 sm:p-6">
+    <CardContainer className="w-full sm:w-80 p-4 sm:p-6">
       <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full sm:w-[30rem] h-auto rounded-xl p-6 border  ">
         <CardItem className="text-xl mb-2 font-bold mx-auto text-neutral-600 dark:text-white">
           Check out my projects, or contact me!
@@ -108,12 +108,6 @@ export function LinksCard() {
               <p className="mt-4 mb-2 underline-animation">work@jwt2706.ca</p>
             </a>
           </div>
-        </CardItem>
-        <CardItem
-          as="p"
-          className="scroll-prompt text-neutral-500 text-sm max-w-sm mt-2 mx-auto dark:text-neutral-300"
-        >
-          I'll be sure to add some excerpts of my projects here eventually.
         </CardItem>
       </CardBody>
     </CardContainer>

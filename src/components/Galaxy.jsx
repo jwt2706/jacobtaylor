@@ -28,8 +28,8 @@ export default function Galaxy() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     galaxyRef.current.appendChild(renderer.domElement);
 
-    // generate particles
-    const particlesData = new Float32Array(PARTICLE_COUNT * 3); // 3 for XYZ coordinates
+    // generate stars
+    const particlesData = new Float32Array(PARTICLE_COUNT * 3); // 3 for xyz coords
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       particlesData[i * 3] = getRandomCoord(); // x
@@ -59,7 +59,7 @@ export default function Galaxy() {
       const scrollPosition = window.scrollY;
       const scrollHeight = document.body.scrollHeight - window.innerHeight;
 
-      // If we're at the top and scrolling up, or at the bottom and scrolling down, don't move the camera
+      // if we're at the top and scrolling up, or at the bottom and scrolling down, don't move the camera
       if (
         (scrollPosition === 0 && delta < 0) ||
         (scrollPosition === scrollHeight && delta > 0)
@@ -67,7 +67,8 @@ export default function Galaxy() {
         return;
       }
 
-      targetZ -= delta * 8;
+      const change = delta * 8;
+      targetZ -= Math.max(-10, Math.min(10, change));
     }
 
     window.addEventListener("wheel", onScroll, false);
@@ -87,10 +88,8 @@ export default function Galaxy() {
 
       renderer.render(scene, camera);
     }
-
     animate();
 
-    // other functions
     function getRandomCoord() {
       return Math.random() * 800 - 400;
     }
