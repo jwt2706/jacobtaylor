@@ -1,5 +1,6 @@
 import React from "react";
 import Galaxy from "./components/Galaxy";
+import Sidebar from "./components/Sidebar";
 import AnimatedCursor from "react-animated-cursor";
 import favicon from "./assets/icons/planet-512.png";
 import { LinksCard } from "./components/LinksCard";
@@ -9,6 +10,7 @@ import "./assets/styles/tailwind.css";
 function App() {
   return (
     <div className="app flex flex-col min-h-screen text-white">
+      <Sidebar />
       <main className="scrollable flex-grow overflow-y-auto">
         <AnimatedCursor
           innerSize={20}
