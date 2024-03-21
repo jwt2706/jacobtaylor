@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { FaExternalLinkAlt, FaBook } from "react-icons/fa";
 import axios from "axios";
 
 function Sidebar() {
   const [repos, setRepos] = useState([]);
   const [isVisible, setIsVisible] = useState(true);
-  const excludeRepos = ["jwt2706.github.io"];
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const excludeRepos = [
+    "jwt2706.github.io",
+    "ExpressionRecognition",
+    "QuickAid",
+  ];
 
   const humanize = (str) => {
     return (
@@ -20,49 +27,93 @@ function Sidebar() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(
-        "https://api.github.com/users/jwt2706/repos"
-      );
-      const reposWithPages = result.data.filter(
-        (repo) => repo.has_pages && !excludeRepos.includes(repo.name)
-      );
-      setRepos(reposWithPages);
+      setLoading(true);
+      setError(null);
+      try {
+        const result = await axios.get(
+          "https://api.github.com/users/jwt2706/repos"
+        );
+        const reposWithPages = result.data.filter(
+          (repo) => repo.has_pages && !excludeRepos.includes(repo.name)
+        );
+        setRepos(reposWithPages);
+      } catch (error) {
+        setError(error);
+      }
+      setLoading(false);
     };
 
     fetchData();
+  }, []);
+
+  // hide sidebar by default on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 640) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <div>
       <button
         onClick={() => setIsVisible(!isVisible)}
-        className="absolute top-0 left-0 m-4 z-10"
+        className="absolute top-0 left-0 m-4 z-20"
       >
-        {isVisible ? "Hide" : "Show"}
+        {isVisible ? "Hide Sidebar" : "Show Sidebar"}
       </button>
-      <aside
-        className={`absolute left-0 top-0 h-screen w-64 bg-gray-800 bg-opacity-50 text-white p-6 transition-all duration-500 ${
-          isVisible ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <br />
-        <h2 className="text-2xl mb-4">My Projects</h2>
-        <ul className="list-disc list-inside">
-          {repos.map((repo) => (
-            <li
-              key={repo.id}
-              className="mb-2 flex justify-between items-center"
-            >
-              <a
-                href={`https://jwt2706.github.io/${repo.name}`}
-                className="text-blue-400 hover:underline"
-              >
-                {humanize(repo.name)}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </aside>
+      {loading ? (
+        <p>Fetching repos...</p>
+      ) : error ? (
+        <p>There was a problem fetching the repos... D:</p>
+      ) : (
+        <aside
+          className={`fixed left-0 top-0 z-10 h-screen w-64 bg-gray-800 bg-opacity-90 sm:bg-opacity-50 text-white p-6 transition-all duration-500 ${
+            isVisible ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <br />
+          <h2 className="text-2xl mb-4 text-center">My Projects</h2>
+          {loading ? (
+            <p>Fetching repos...</p>
+          ) : error ? (
+            <p>There was a problem fetching the repos... D:</p>
+          ) : (
+            <ul className="list-none list-inside">
+              {repos.map((repo) => (
+                <li key={repo.id} className="mb-2">
+                  <span className="block text-left">{humanize(repo.name)}</span>
+                  <div className="flex space-x-2">
+                    <a
+                      href={`https://jwt2706.github.io/${repo.name}`}
+                      className="text-blue-400 hover:underline"
+                      title="Go to project"
+                    >
+                      <FaExternalLinkAlt />
+                    </a>
+                    <a
+                      href={`https://github.com/jwt2706/${repo.name}/blob/master/README.md`}
+                      className="text-blue-400 hover:underline"
+                      title="Go to README"
+                    >
+                      <FaBook />
+                    </a>
+                    <br />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </aside>
+      )}
     </div>
   );
 }
