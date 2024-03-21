@@ -7,15 +7,12 @@ function Sidebar() {
   const [isVisible, setIsVisible] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const excludeRepos = [
-    "jwt2706.github.io",
-    "ExpressionRecognition",
-    "QuickAid",
-  ];
 
   const humanize = (str) => {
     return (
       str
+        // replace hyphens with spaces
+        .replace(/-/g, " ")
         // insert a space before all caps
         .replace(/([A-Z])/g, " $1")
         // uppercase the first character
@@ -34,7 +31,7 @@ function Sidebar() {
           "https://api.github.com/users/jwt2706/repos"
         );
         const reposWithPages = result.data.filter(
-          (repo) => repo.has_pages && !excludeRepos.includes(repo.name)
+          (repo) => repo.description && repo.description.includes("[s!]")
         );
         setRepos(reposWithPages);
       } catch (error) {
@@ -66,54 +63,54 @@ function Sidebar() {
     <div>
       <button
         onClick={() => setIsVisible(!isVisible)}
-        className="absolute top-0 left-0 m-4 z-20"
+        className="fixed top-0 left-0 m-4 z-20 text-white border border-white hover:bg-white hover:text-black font-bold px-2 py-1 rounded-md"
       >
-        {isVisible ? "Hide Sidebar" : "Show Sidebar"}
+        {isVisible ? "Hide" : "Show"}
       </button>
-      {loading ? (
-        <p>Fetching repos...</p>
-      ) : error ? (
-        <p>There was a problem fetching the repos... D:</p>
-      ) : (
-        <aside
-          className={`fixed left-0 top-0 z-10 h-screen w-64 bg-gray-800 bg-opacity-90 sm:bg-opacity-50 text-white p-6 transition-all duration-500 ${
-            isVisible ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          <br />
-          <h2 className="text-2xl mb-4 text-center">My Projects</h2>
-          {loading ? (
-            <p>Fetching repos...</p>
-          ) : error ? (
-            <p>There was a problem fetching the repos... D:</p>
-          ) : (
-            <ul className="list-none list-inside">
-              {repos.map((repo) => (
-                <li key={repo.id} className="mb-2">
-                  <span className="block text-left">{humanize(repo.name)}</span>
-                  <div className="flex space-x-2">
+      <aside
+        className={`fixed left-0 top-0 z-10 h-screen w-64 bg-gray-800 bg-opacity-90 sm:bg-opacity-50 text-white p-6 transition-all duration-500 shadow-lg ${
+          isVisible ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <br />
+        <h2 className="text-2xl my-4 text-center">My Projects</h2>
+        {loading ? (
+          <p>Fetching repos...</p>
+        ) : error ? (
+          <p>There was a problem fetching the repos... D:</p>
+        ) : (
+          <ul className="list-none list-inside">
+            {repos.map((repo) => (
+              <li
+                key={repo.id}
+                className="mb-2 px-4 py-3 hover:bg-gray-700 rounded border border-gray-500 border-opacity-50"
+              >
+                <span className="block text-left mb-2">
+                  {humanize(repo.name)}
+                </span>
+                <div className="flex space-x-2">
+                  {repo.has_pages && (
                     <a
                       href={`https://jwt2706.github.io/${repo.name}`}
-                      className="text-blue-400 hover:underline"
+                      className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                       title="Go to project"
                     >
                       <FaExternalLinkAlt />
                     </a>
-                    <a
-                      href={`https://github.com/jwt2706/${repo.name}/blob/master/README.md`}
-                      className="text-blue-400 hover:underline"
-                      title="Go to README"
-                    >
-                      <FaBook />
-                    </a>
-                    <br />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </aside>
-      )}
+                  )}
+                  <a
+                    href={`https://github.com/jwt2706/${repo.name}/blob/master/README.md`}
+                    className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
+                    title="Go to README"
+                  >
+                    <FaBook />
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </aside>
     </div>
   );
 }
