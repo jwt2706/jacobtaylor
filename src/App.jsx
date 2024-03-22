@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { useRoutes, useNavigate, BrowserRouter as Router, Navigate } from "react-router-dom";
 import Home from "./components/Home";
 
 function Navigation() {
@@ -14,11 +9,13 @@ function Navigation() {
     navigate("/");
   }, [navigate]);
 
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-    </Routes>
-  );
+  // define routes using useRoutes
+  const routes = useRoutes([
+    { path: "/", element: <Home /> },
+    { path: "*", element: <Navigate to="/" replace /> }, // Redirect to home page
+  ]);
+
+  return routes;
 }
 
 function App() {
