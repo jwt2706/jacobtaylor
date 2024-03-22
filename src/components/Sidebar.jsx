@@ -130,6 +130,8 @@ function Sidebar() {
                     <a
                       href={`https://github.com/jwt2706/${repo.name}/blob/master/README.md`}
                       className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       title="Go to README"
                       aria-label="External link to project documentation"
                     >
