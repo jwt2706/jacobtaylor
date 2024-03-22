@@ -122,6 +122,7 @@ function Sidebar() {
                         className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label="External link to project"
                       >
                         <FaExternalLinkAlt />
                       </a>
@@ -130,6 +131,7 @@ function Sidebar() {
                       href={`https://github.com/jwt2706/${repo.name}/blob/master/README.md`}
                       className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                       title="Go to README"
+                      aria-label="External link to project documentation"
                     >
                       <FaBook />
                     </a>
@@ -153,6 +155,7 @@ function Sidebar() {
                     target="_blank"
                     rel="noopener noreferrer"
                     title="See model."
+                    aria-label="External link to Hugging Face repository"
                   >
                     <FaBook />
                   </a>
