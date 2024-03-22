@@ -63,7 +63,7 @@ function Home() {
               <motion.div
                 animate={
                   isHovered
-                    ? { scale: 1.2, rotateY: 360 }
+                    ? { scale: 1.1, rotateY: 180 }
                     : { scale: 1, rotateY: 0 }
                 }
                 transition={{ duration: 0.5 }}
