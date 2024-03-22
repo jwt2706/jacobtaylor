@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Galaxy from "./Galaxy";
 import Sidebar from "./Sidebar";
-import favicon from "../assets/icons/planet-512.png";
 import AnimatedCursor from "react-animated-cursor";
+import { IoPlanet } from "react-icons/io5";
 import { LinksCard } from "./LinksCard";
 import { motion } from "framer-motion";
 import { LuCopyright } from "react-icons/lu";
@@ -10,6 +10,8 @@ import "../assets/styles/app.scss";
 import "../assets/styles/tailwind.css";
 
 function Home() {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -52,17 +54,24 @@ function Home() {
             ]}
           />
           <div>
+            <br />
             <div
-              className="flex justify-center items-center"
-              alt="favicon logo"
+              className="mx-auto inline-block p-4"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              <img
-                src={favicon}
-                className="favicon w-24 h-24 rounded-full shadow-lg"
-                alt="favicon logo"
-              />
+              <motion.div
+                animate={
+                  isHovered
+                    ? { scale: 1.2, rotateY: 360 }
+                    : { scale: 1, rotateY: 0 }
+                }
+                transition={{ duration: 0.5 }}
+              >
+                <IoPlanet size={110} color="black" />
+              </motion.div>
             </div>
-            <br></br>
+            <br />
             <h1>
               <span className="text-4xl underline-animation">
                 Hey, I'm Jacob
