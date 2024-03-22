@@ -10,6 +10,8 @@ export default function Galaxy() {
     const INIT_CAMERA_POS = 500;
     let targetZ = INIT_CAMERA_POS;
 
+    let isMobile = window.innerWidth < 640;
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -76,8 +78,16 @@ export default function Galaxy() {
     // main
     function animate() {
       requestAnimationFrame(animate);
-      targetRotation.x = mouse.y * 0.2;
-      targetRotation.y = mouse.x * 0.2;
+
+      // if the user is on a mobile device then auto-rotate
+      if (isMobile) {
+        targetRotation.x += 0.001;
+        targetRotation.y += 0.001;
+      } else {
+        targetRotation.x = mouse.y * 0.2;
+        targetRotation.y = mouse.x * 0.2;
+      }
+
       particleSystem.rotation.x +=
         (targetRotation.x - particleSystem.rotation.x) * 0.05;
       particleSystem.rotation.y +=

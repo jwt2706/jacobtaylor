@@ -21,7 +21,7 @@ export function LinksCard() {
               rel="noopener noreferrer"
               className="w-1/2 p-4 flex flex-col items-center"
             >
-              <FaGithub size={120} color="black" />
+              <FaGithub size={110} color="black" />
               <p className="mt-4 mb-2 underline-animation">
                 github.com/jwt2706
               </p>
@@ -32,7 +32,7 @@ export function LinksCard() {
               href="mailto:work@jwt2706.ca"
               className="w-1/2 p-4 flex flex-col items-center"
             >
-              <FaEnvelope size={120} color="black" />
+              <FaEnvelope size={110} color="black" />
               <p className="mt-4 mb-2 underline-animation">work@jwt2706.ca</p>
             </a>
           </div>
