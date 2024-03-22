@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FaExternalLinkAlt, FaBook } from "react-icons/fa";
-import axios from "axios";
 
 function Sidebar() {
   const [repos, setRepos] = useState([]);
@@ -23,21 +22,25 @@ function Sidebar() {
   useEffect(() => {
     const fetchData = async (repo) => {
       try {
-        const result = await axios.get(`https://api.github.com/repos/${repo}`);
-        return result.data;
+        const response = await fetch(`https://api.github.com/repos/${repo}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
       } catch (error) {
         setError(error);
       }
     };
-
+  
     const fetchUserRepos = async () => {
       try {
-        const result = await axios.get(
-          "https://api.github.com/users/jwt2706/repos"
-        );
-        return result.data.filter(
-          (repo) => repo.description && repo.description.includes("[s!]")
-        );
+        const response = await fetch("https://api.github.com/users/jwt2706/repos");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.filter((repo) => repo.description && repo.description.includes("[s!]"));
       } catch (error) {
         setError(error);
       }
