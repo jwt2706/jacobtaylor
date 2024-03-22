@@ -9,10 +9,10 @@ function Navigation() {
     navigate("/");
   }, [navigate]);
 
-  // define routes using useRoutes
+   // redirect to home page if 404 because im too lazy to make a page for that
   const routes = useRoutes([
     { path: "/", element: <Home /> },
-    { path: "*", element: <Navigate to="/" replace /> }, // Redirect to home page
+    { path: "*", element: <Navigate to="/" replace /> },
   ]);
 
   return routes;

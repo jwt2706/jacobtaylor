@@ -4,9 +4,9 @@ import axios from "axios";
 
 function Sidebar() {
   const [repos, setRepos] = useState([]);
-  const [isVisible, setIsVisible] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isVisible, setIsVisible] = useState(window.innerWidth > 640);
 
   const externalRepos = [
     "FRC2706/MergeData",
@@ -62,22 +62,6 @@ function Sidebar() {
       repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       setRepos(repos);
     });
-  }, []);
-
-  // hide sidebar by default on mobile
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 640) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
