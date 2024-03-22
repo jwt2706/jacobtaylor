@@ -1,7 +1,6 @@
 import React from "react";
 import { CardBody, CardContainer, CardItem } from "./Perspective";
-import GithubIcon from "../assets/icons/GithubIcon";
-import MailIcon from "../assets/icons/MailIcon";
+import { FaGithub, FaEnvelope } from "react-icons/fa";
 
 export function LinksCard() {
   return (
@@ -22,7 +21,7 @@ export function LinksCard() {
               rel="noopener noreferrer"
               className="w-1/2 p-4 flex flex-col items-center"
             >
-              <GithubIcon />
+              <FaGithub size={120} color="black" />
               <p className="mt-4 mb-2 underline-animation">
                 github.com/jwt2706
               </p>
@@ -33,7 +32,7 @@ export function LinksCard() {
               href="mailto:work@jwt2706.ca"
               className="w-1/2 p-4 flex flex-col items-center"
             >
-              <MailIcon />
+              <FaEnvelope size={120} color="black" />
               <p className="mt-4 mb-2 underline-animation">work@jwt2706.ca</p>
             </a>
           </div>
