@@ -1,18 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { FaExternalLinkAlt, FaBook } from "react-icons/fa";
 
-function Sidebar() {
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [isVisible, setIsVisible] = useState(window.innerWidth > 640);
+interface Repo {
+  id: number;
+  name: string;
+  description: string;
+  has_pages: boolean;
+  owner: {
+    login: string;
+  };
+  created_at: string;
+}
+
+interface HuggingFaceRepo {
+  name: string;
+  repo: string;
+}
+
+const Sidebar: React.FC = () => {
+  const [repos, setRepos] = useState<Repo[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(window.innerWidth > 640);
 
   const externalRepos = [
     "FRC2706/MergeData",
     "read-me-35/read-me-35.github.io",
   ];
 
-  const huggingfaceRepos = [
+  const huggingfaceRepos: HuggingFaceRepo[] = [
     {
       name: "Food Classification 86M",
       repo: "jwt2706/google-vit-base-patch16-224-in21k-finetuned-food-classification-86M-v0.1",
@@ -20,16 +36,16 @@ function Sidebar() {
   ];
 
   useEffect(() => {
-    const fetchData = async (repo) => {
+    const fetchData = async (repo: string) => {
       try {
         const response = await fetch(`https://api.github.com/repos/${repo}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
+        const data: Repo = await response.json();
         return data;
       } catch (error) {
-        setError(error);
+        setError(error as Error);
       }
     };
   
@@ -39,10 +55,10 @@ function Sidebar() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
+        const data: Repo[] = await response.json();
         return data.filter((repo) => repo.description && repo.description.includes("[s!]"));
       } catch (error) {
-        setError(error);
+        setError(error as Error);
       }
     };
 
@@ -53,17 +69,20 @@ function Sidebar() {
         const externalReposData = await Promise.all(
           externalRepos.map(fetchData)
         );
-        return [...userRepos, ...externalReposData];
+        return [...(userRepos as Repo[]), ...externalReposData];
       } catch (error) {
-        setError(error);
+        setError(error as Error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchAllRepos().then((repos) => {
-      repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      setRepos(repos);
+      if (repos) {
+        const definedRepos = repos.filter((repo): repo is Repo => Boolean(repo));
+        definedRepos.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        setRepos(definedRepos);
+      }
     });
   }, []);
 
