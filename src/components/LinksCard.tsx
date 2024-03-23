@@ -1,8 +1,8 @@
-import React from "react";
+import React, { FC } from "react";
 import { CardBody, CardContainer, CardItem } from "./Perspective";
 import { FaGithub, FaEnvelope } from "react-icons/fa";
 
-export function LinksCard() {
+export const LinksCard: FC = () => {
   return (
     <CardContainer className="w-full sm:w-80 p-4 sm:p-6">
       <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full sm:w-[30rem] h-auto rounded-xl p-6 border  ">
@@ -11,7 +11,7 @@ export function LinksCard() {
         </CardItem>
 
         <CardItem
-          translateZ="100"
+          translateZ="75"
           className="flex flex-col sm:flex-row justify-center sm:justify-around items-center w-full mt-4"
         >
           <div className="flex flex-col items-center logo svg">

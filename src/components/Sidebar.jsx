@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaExternalLinkAlt, FaBook } from "react-icons/fa";
-import axios from "axios";
 
 function Sidebar() {
   const [repos, setRepos] = useState([]);
-  const [isVisible, setIsVisible] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isVisible, setIsVisible] = useState(window.innerWidth > 640);
 
   const externalRepos = [
     "FRC2706/MergeData",
@@ -23,21 +22,25 @@ function Sidebar() {
   useEffect(() => {
     const fetchData = async (repo) => {
       try {
-        const result = await axios.get(`https://api.github.com/repos/${repo}`);
-        return result.data;
+        const response = await fetch(`https://api.github.com/repos/${repo}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
       } catch (error) {
         setError(error);
       }
     };
-
+  
     const fetchUserRepos = async () => {
       try {
-        const result = await axios.get(
-          "https://api.github.com/users/jwt2706/repos"
-        );
-        return result.data.filter(
-          (repo) => repo.description && repo.description.includes("[s!]")
-        );
+        const response = await fetch("https://api.github.com/users/jwt2706/repos");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.filter((repo) => repo.description && repo.description.includes("[s!]"));
       } catch (error) {
         setError(error);
       }
@@ -62,22 +65,6 @@ function Sidebar() {
       repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       setRepos(repos);
     });
-  }, []);
-
-  // hide sidebar by default on mobile
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 640) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
@@ -130,6 +117,8 @@ function Sidebar() {
                     <a
                       href={`https://github.com/jwt2706/${repo.name}/blob/master/README.md`}
                       className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       title="Go to README"
                       aria-label="External link to project documentation"
                     >

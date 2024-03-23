@@ -1,25 +1,24 @@
 module.exports = {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: 'media',
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+    './public/index.html',
+  ],
   theme: {
     extend: {
+      scale: {
+        '130': '1.3',
+      },
       animation: {
-        shimmer: "shimmer 2s linear infinite"
+        'fade-in': 'fade-in 2s',
       },
       keyframes: {
-        shimmer: {
-          from: {
-            "backgroundPosition": "0 0"
-          },
-          to: {
-            "backgroundPosition": "-200% 0"
-          }
-        }
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       }
     },
   },
-  variants: {
-    extend: {},
-  },
+  variants: {},
   plugins: [],
-}
+};
