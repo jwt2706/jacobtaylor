@@ -68,9 +68,10 @@ const Sidebar: React.FC = () => {
       setLoading(true);
       try {
         const userRepos = await fetchUserRepos();
-        const externalReposData = await Promise.all(
-          externalRepos.map(fetchData)
-        );
+        let externalReposData: (Repo | undefined)[] = [];
+        if (Array.isArray(externalRepos)) {
+          externalReposData = await Promise.all(externalRepos.map(fetchData));
+        }
         return [...(userRepos as Repo[]), ...externalReposData];
       } catch (error) {
         setError(error as Error);
