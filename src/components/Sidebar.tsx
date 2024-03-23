@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaExternalLinkAlt, FaBook } from "react-icons/fa";
 
 interface Repo {
@@ -23,10 +23,12 @@ const Sidebar: React.FC = () => {
   const [error, setError] = useState<Error | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(window.innerWidth > 640);
 
-  const externalRepos = [
-    "FRC2706/MergeData",
-    "read-me-35/read-me-35.github.io",
-  ];
+  const externalRepos = useMemo(() => {
+    [
+      "FRC2706/MergeData",
+      "read-me-35/read-me-35.github.io",
+    ];
+  }, []);
 
   const huggingfaceRepos: HuggingFaceRepo[] = [
     {
@@ -84,7 +86,7 @@ const Sidebar: React.FC = () => {
         setRepos(definedRepos);
       }
     });
-  }, []);
+  }, [externalRepos]);
 
   return (
     <div>
@@ -119,7 +121,7 @@ const Sidebar: React.FC = () => {
                     {repo.has_pages && (
                       <a
                         href={
-                          externalRepos.includes(
+                          Array.isArray(externalRepos) && externalRepos.includes(
                             `${repo.owner.login}/${repo.name}`
                           )
                             ? `https://${repo.owner.login}.github.io/${repo.name}`
@@ -147,7 +149,6 @@ const Sidebar: React.FC = () => {
                 </li>
               ))}
             </ul>
-
             <hr className="my-4" />
             <h2 className="text-2xl my-4 text-center">Hugging Face</h2>
             <ul className="list-none list-inside">
@@ -162,7 +163,7 @@ const Sidebar: React.FC = () => {
                     className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                     target="_blank"
                     rel="noopener noreferrer"
-                    title="See model."
+                    title="See model on Hugging Face"
                     aria-label="External link to Hugging Face repository"
                   >
                     <FaBook />
