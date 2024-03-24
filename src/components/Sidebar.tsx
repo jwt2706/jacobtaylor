@@ -121,13 +121,7 @@ const Sidebar: React.FC = () => {
                   <div className="flex space-x-2">
                     {repo.has_pages && (
                       <a
-                        href={
-                          Array.isArray(externalRepos) && externalRepos.includes(
-                            `${repo.owner.login}/${repo.name}`
-                          )
-                            ? `https://${repo.owner.login}.github.io/${repo.name}`
-                            : `https://jwt2706.github.io/${repo.name}`
-                        }
+                        href={`https://${repo.owner.login}.github.io/${repo.name}`}
                         className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -137,7 +131,7 @@ const Sidebar: React.FC = () => {
                       </a>
                     )}
                     <a
-                      href={`https://github.com/jwt2706/${repo.name}/blob/master/README.md`}
+                      href={`https://github.com/${repo.owner.login}/${repo.name}/blob/master/README.md`}
                       className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                       target="_blank"
                       rel="noopener noreferrer"
