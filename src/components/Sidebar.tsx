@@ -1,18 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaExternalLinkAlt, FaBook } from "react-icons/fa";
 
-function Sidebar() {
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [isVisible, setIsVisible] = useState(window.innerWidth > 640);
+interface Repo {
+  id: number;
+  name: string;
+  description: string;
+  has_pages: boolean;
+  owner: {
+    login: string;
+  };
+  created_at: string;
+}
 
-  const externalRepos = [
-    "FRC2706/MergeData",
-    "read-me-35/read-me-35.github.io",
-  ];
+interface HuggingFaceRepo {
+  name: string;
+  repo: string;
+}
 
-  const huggingfaceRepos = [
+const Sidebar: React.FC = () => {
+  const [repos, setRepos] = useState<Repo[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(window.innerWidth > 640);
+
+  const externalRepos = useMemo(() => {
+    [
+      "FRC2706/MergeData",
+      "read-me-35/read-me-35.github.io",
+    ];
+  }, []);
+
+  const huggingfaceRepos: HuggingFaceRepo[] = [
     {
       name: "Food Classification 86M",
       repo: "jwt2706/google-vit-base-patch16-224-in21k-finetuned-food-classification-86M-v0.1",
@@ -20,16 +38,16 @@ function Sidebar() {
   ];
 
   useEffect(() => {
-    const fetchData = async (repo) => {
+    const fetchData = async (repo: string) => {
       try {
         const response = await fetch(`https://api.github.com/repos/${repo}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
+        const data: Repo = await response.json();
         return data;
       } catch (error) {
-        setError(error);
+        setError(error as Error);
       }
     };
   
@@ -39,10 +57,10 @@ function Sidebar() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
+        const data: Repo[] = await response.json();
         return data.filter((repo) => repo.description && repo.description.includes("[s!]"));
       } catch (error) {
-        setError(error);
+        setError(error as Error);
       }
     };
 
@@ -50,22 +68,26 @@ function Sidebar() {
       setLoading(true);
       try {
         const userRepos = await fetchUserRepos();
-        const externalReposData = await Promise.all(
-          externalRepos.map(fetchData)
-        );
-        return [...userRepos, ...externalReposData];
+        let externalReposData: (Repo | undefined)[] = [];
+        if (Array.isArray(externalRepos)) {
+          externalReposData = await Promise.all(externalRepos.map(fetchData));
+        }
+        return [...(userRepos as Repo[]), ...externalReposData];
       } catch (error) {
-        setError(error);
+        setError(error as Error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchAllRepos().then((repos) => {
-      repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      setRepos(repos);
+      if (repos) {
+        const definedRepos = repos.filter((repo): repo is Repo => Boolean(repo));
+        definedRepos.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        setRepos(definedRepos);
+      }
     });
-  }, []);
+  }, [externalRepos]);
 
   return (
     <div>
@@ -99,13 +121,7 @@ function Sidebar() {
                   <div className="flex space-x-2">
                     {repo.has_pages && (
                       <a
-                        href={
-                          externalRepos.includes(
-                            `${repo.owner.login}/${repo.name}`
-                          )
-                            ? `https://${repo.owner.login}.github.io/${repo.name}`
-                            : `https://jwt2706.github.io/${repo.name}`
-                        }
+                        href={`https://${repo.owner.login}.github.io/${repo.name}`}
                         className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -115,7 +131,7 @@ function Sidebar() {
                       </a>
                     )}
                     <a
-                      href={`https://github.com/jwt2706/${repo.name}/blob/master/README.md`}
+                      href={`https://github.com/${repo.owner.login}/${repo.name}/blob/master/README.md`}
                       className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -128,7 +144,6 @@ function Sidebar() {
                 </li>
               ))}
             </ul>
-
             <hr className="my-4" />
             <h2 className="text-2xl my-4 text-center">Hugging Face</h2>
             <ul className="list-none list-inside">
@@ -143,7 +158,7 @@ function Sidebar() {
                     className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                     target="_blank"
                     rel="noopener noreferrer"
-                    title="See model."
+                    title="See model on Hugging Face"
                     aria-label="External link to Hugging Face repository"
                   >
                     <FaBook />

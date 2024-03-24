@@ -49,7 +49,7 @@ const Home: React.FC = () => {
             <br />
             <h1>
               <span className="text-4xl underline-animation">
-                Hey, I'm Jacob
+                {"Hey, I'm Jacob"}
               </span>
             </h1>
             <br />

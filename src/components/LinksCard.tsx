@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { CardBody, CardContainer, CardItem } from "./Perspective";
 import { FaGithub, FaEnvelope } from "react-icons/fa";
 

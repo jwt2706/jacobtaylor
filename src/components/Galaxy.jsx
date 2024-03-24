@@ -8,10 +8,7 @@ export default function Galaxy() {
     // constants
     const PARTICLE_COUNT = 1000;
     const INIT_CAMERA_POS = 500;
-    let targetZ = INIT_CAMERA_POS;
-
-    let isMobile = window.innerWidth < 640;
-
+    const currentGalaxy = galaxyRef.current;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -24,6 +21,9 @@ export default function Galaxy() {
     const particleMaterial = new THREE.PointsMaterial({ color: 0xffffff });
     const mouse = new THREE.Vector2();
     const targetRotation = new THREE.Vector2();
+
+    let targetZ = INIT_CAMERA_POS;
+    let isMobile = window.innerWidth < 640;
 
     // init
     camera.position.z = INIT_CAMERA_POS;
@@ -108,7 +108,9 @@ export default function Galaxy() {
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("wheel", onScroll);
-      galaxyRef.current.removeChild(renderer.domElement);
+      if (currentGalaxy) {
+        currentGalaxy.removeChild(renderer.domElement);
+      }
     };
   }, []);
 
