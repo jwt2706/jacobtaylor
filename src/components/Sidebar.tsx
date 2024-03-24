@@ -24,7 +24,7 @@ const Sidebar: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(window.innerWidth > 640);
 
   const externalRepos = useMemo(() => {
-    [
+    return [
       "FRC2706/MergeData",
       "read-me-35/read-me-35.github.io",
     ];
