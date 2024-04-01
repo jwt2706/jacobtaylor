@@ -5,6 +5,7 @@ import AnimatedCursor from "react-animated-cursor";
 import { IoPlanet } from "react-icons/io5";
 import { LinksCard } from "./LinksCard";
 import { LuCopyright } from "react-icons/lu";
+import { FiExternalLink } from 'react-icons/fi';
 import "../assets/styles/app.scss";
 import "../assets/styles/tailwind.css";
 
@@ -54,14 +55,20 @@ const Home: React.FC = () => {
             </h1>
             <br />
             <code className="text-gray-400">
-              Software engineering undergrad.
+              I'm a software engineering undergrad.
+              <br />
+              Check out some of my projects on the sidebar!
             </code>
           </div>
           <LinksCard />
+          <a href="/public.key" target="_blank" rel="noopener noreferrer" aria-label="GPG key" className="inline-flex items-center px-2 text-gray-400 text-lg bg-neutral-800 p-1 rounded mb-4">
+            GPG key
+            <FiExternalLink className="ml-2" aria-hidden="true" />
+          </a>
         </main>
         <footer>
           <code>
-            Coded with care. <LuCopyright style={{ display: "inline" }} />{" "}
+            Made with &lt;3 | <LuCopyright style={{ display: "inline" }} />{" "}
             jwt2706 {new Date().getFullYear()}
           </code>
         </footer>
