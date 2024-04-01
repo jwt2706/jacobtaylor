@@ -60,6 +60,9 @@ const Home: React.FC = () => {
             </code>
           </div>
           <LinksCard />
+          <code>
+            GPG key
+          </code>
         </main>
         <footer>
           <code>

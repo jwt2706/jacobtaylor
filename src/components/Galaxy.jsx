@@ -24,6 +24,7 @@ export default function Galaxy() {
 
     let targetZ = INIT_CAMERA_POS;
     let isMobile = window.innerWidth < 640;
+    let zoomIn = true;
 
     // init
     camera.position.z = INIT_CAMERA_POS;
@@ -55,25 +56,17 @@ export default function Galaxy() {
 
     window.addEventListener("mousemove", onMouseMove, false);
 
-    // scroll movement
-    function onScroll(event) {
-      const delta = Math.sign(event.deltaY);
-      const scrollPosition = window.scrollY;
-      const scrollHeight = document.body.scrollHeight - window.innerHeight;
+    // Set an interval to smoothly zoom in and out
+    const zoomInterval = setInterval(() => {
+      const change = zoomIn ? 1 : -1;
+      targetZ += change;
 
-      // if we're at the top and scrolling up, or at the bottom and scrolling down, don't move the camera
-      if (
-        (scrollPosition === 0 && delta < 0) ||
-        (scrollPosition === scrollHeight && delta > 0)
-      ) {
-        return;
+      if (targetZ >= 500) {
+        zoomIn = false;
+      } else if (targetZ <= -200) {
+        zoomIn = true;
       }
-
-      const change = delta * 8;
-      targetZ -= Math.max(-10, Math.min(10, change));
-    }
-
-    window.addEventListener("wheel", onScroll, false);
+    }, 50);
 
     // main
     function animate() {
@@ -94,7 +87,7 @@ export default function Galaxy() {
         (targetRotation.y - particleSystem.rotation.y) * 0.05;
 
       // lerp camera position
-      camera.position.z += (targetZ - camera.position.z) * 0.05;
+      camera.position.z += (targetZ - camera.position.z) * 0.01;
 
       renderer.render(scene, camera);
     }
@@ -107,7 +100,7 @@ export default function Galaxy() {
     // clean up when unmounting
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("wheel", onScroll);
+      clearInterval(zoomInterval);
       if (currentGalaxy) {
         currentGalaxy.removeChild(renderer.domElement);
       }
