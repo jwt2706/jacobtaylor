@@ -61,7 +61,7 @@ export default function Galaxy() {
       const change = zoomIn ? 1 : -1;
       targetZ += change;
 
-      if (targetZ >= 500) {
+      if (targetZ >= 400) {
         zoomIn = false;
       } else if (targetZ <= -200) {
         zoomIn = true;
