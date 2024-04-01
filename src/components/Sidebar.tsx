@@ -103,7 +103,10 @@ const Sidebar: React.FC = () => {
         }`}
       >
         <br />
-        <h2 className="text-2xl my-4 text-center">Featured Projects</h2>
+        <h2 className="text-2xl mt-4 text-center">Featured Projects</h2>
+        <h6 className="text-center mb-4 text-sm text-gray-400">
+          See docs (and demo if available)
+        </h6>
         {loading ? (
           <p>Fetching repos...</p>
         ) : error ? (
@@ -117,21 +120,22 @@ const Sidebar: React.FC = () => {
                   className="mb-2 px-4 py-3 hover:bg-gray-700 rounded border border-gray-500 border-opacity-50"
                   title={repo.description.replace("[s!]", "")}
                 >
-                  <span className="block text-left mb-2">{repo.name}</span>
+                  <span className="block text-left">{repo.name}</span>
+                  <span className="block text-sm mb-2 text-gray-400 truncate">
+                    {repo.description.replace("[s!]", "")}
+                  </span>
                   <div className="flex space-x-2">
                     {repo.has_pages && (
                       <a
                         href={`https://${repo.owner.login}.github.io/${repo.name}`}
                         className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
-                        target="_blank"
-                        rel="noopener noreferrer"
                         aria-label="External link to project"
                       >
                         <FaExternalLinkAlt />
                       </a>
                     )}
                     <a
-                      href={`https://github.com/${repo.owner.login}/${repo.name}/blob/master/README.md`}
+                      href={`https://github.com/${repo.owner.login}/${repo.name}/blob/main/README.md`}
                       className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -145,7 +149,10 @@ const Sidebar: React.FC = () => {
               ))}
             </ul>
             <hr className="my-4" />
-            <h2 className="text-2xl my-4 text-center">Hugging Face</h2>
+            <h2 className="text-2xl mt-4 text-center">Hugging Face</h2>
+            <h6 className="text-center mb-4 text-sm text-gray-400">
+              Neural network stuff
+            </h6>
             <ul className="list-none list-inside">
               {huggingfaceRepos.map((repoObj) => (
                 <li

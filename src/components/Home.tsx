@@ -54,14 +54,16 @@ const Home: React.FC = () => {
             </h1>
             <br />
             <code className="text-gray-400">
-              Software engineering undergrad.
+              I'm a software engineering undergrad.
+              <br />
+              Check out some of my projects on the sidebar!
             </code>
           </div>
           <LinksCard />
         </main>
         <footer>
           <code>
-            Coded with care. <LuCopyright style={{ display: "inline" }} />{" "}
+            Made with &lt;3 | <LuCopyright style={{ display: "inline" }} />{" "}
             jwt2706 {new Date().getFullYear()}
           </code>
         </footer>
