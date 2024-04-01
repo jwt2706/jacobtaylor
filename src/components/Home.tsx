@@ -5,6 +5,7 @@ import AnimatedCursor from "react-animated-cursor";
 import { IoPlanet } from "react-icons/io5";
 import { LinksCard } from "./LinksCard";
 import { LuCopyright } from "react-icons/lu";
+import { FiExternalLink } from 'react-icons/fi';
 import "../assets/styles/app.scss";
 import "../assets/styles/tailwind.css";
 
@@ -60,9 +61,10 @@ const Home: React.FC = () => {
             </code>
           </div>
           <LinksCard />
-          <code>
+          <a href="/public.key" target="_blank" rel="noopener noreferrer" aria-label="GPG key" className="inline-flex items-center px-2 text-gray-400 text-lg bg-neutral-800 p-1 rounded mb-4">
             GPG key
-          </code>
+            <FiExternalLink className="ml-2" aria-hidden="true" />
+          </a>
         </main>
         <footer>
           <code>

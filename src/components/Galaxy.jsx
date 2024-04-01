@@ -66,7 +66,7 @@ export default function Galaxy() {
       } else if (targetZ <= -200) {
         zoomIn = true;
       }
-    }, 50);
+    }, 100);
 
     // main
     function animate() {
