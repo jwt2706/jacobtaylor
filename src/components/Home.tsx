@@ -61,7 +61,7 @@ const Home: React.FC = () => {
             </code>
           </div>
           <LinksCard />
-          <a href="/public.key" target="_blank" rel="noopener noreferrer" aria-label="GPG key" className="inline-flex items-center px-2 text-gray-400 text-lg bg-neutral-800 p-1 rounded mb-4">
+          <a href="/jwt2706_public.key" target="_blank" rel="noopener noreferrer" aria-label="GPG key" className="inline-flex items-center px-2 text-gray-400 text-lg bg-neutral-800 p-1 rounded mb-4">
             GPG key
             <FiExternalLink className="ml-2" aria-hidden="true" />
           </a>
