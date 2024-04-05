@@ -1,7 +1,6 @@
 import { useEffect, FC } from "react";
 import { useRoutes, useNavigate, BrowserRouter as Router, Navigate } from "react-router-dom";
 import Home from "./components/Home";
-import NotFound from "./components/NotFound";
 
 const Navigation: FC = () => {
   const navigate = useNavigate();
@@ -10,10 +9,10 @@ const Navigation: FC = () => {
     navigate("/");
   }, [navigate]);
 
-  // 404s redirect to the home page because im too lazy to make a page for that
+  // redirect 404s to home page because im too lazy to make a page for that
   const routes = useRoutes([
     { path: "/", element: <Home /> },
-    { path: "*", element: <NotFound /> },
+    { path: "*", element: <Navigate to="/" replace /> },
   ]);
 
   return routes;
