@@ -151,7 +151,7 @@ const Sidebar: React.FC = () => {
             <hr className="my-4" />
             <h2 className="text-2xl mt-4 text-center">Hugging Face</h2>
             <h6 className="text-center mb-4 text-sm text-gray-400">
-              Neural network stuff
+              ML training & finetuning
             </h6>
             <ul className="list-none list-inside">
               {huggingfaceRepos.map((repoObj) => (

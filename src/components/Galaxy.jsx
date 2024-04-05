@@ -63,10 +63,10 @@ export default function Galaxy() {
 
       if (targetZ >= 300) {
         zoomIn = false;
-      } else if (targetZ <= -200) {
+      } else if (targetZ <= -150) {
         zoomIn = true;
       }
-    }, 100);
+    }, 90);
 
     // main
     function animate() {
