@@ -135,12 +135,12 @@ const Sidebar: React.FC = () => {
                       </a>
                     )}
                     <a
-                      href={`https://github.com/${repo.owner.login}/${repo.name}/blob/main/README.md`}
+                      href={`https://github.com/${repo.owner.login}/${repo.name}/`}
                       className="text-blue-400 transition-transform duration-200 transform hover:scale-150"
                       target="_blank"
                       rel="noopener noreferrer"
-                      title="Go to README"
-                      aria-label="External link to project documentation"
+                      title="See repository"
+                      aria-label="External link to project repository and documentation"
                     >
                       <FaBook />
                     </a>
