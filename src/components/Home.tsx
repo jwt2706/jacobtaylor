@@ -50,12 +50,12 @@ const Home: React.FC = () => {
             <br />
             <h1>
               <span className="text-4xl underline-animation">
-                {"Hey, I'm Jacob"}
+                {"Hey, I'm Jwt2706"}
               </span>
             </h1>
             <br />
             <code className="text-gray-400">
-              I'm a software engineering undergrad.
+              I'm an open source enjoyer.
               <br />
               Check out some of my projects on the sidebar!
             </code>
