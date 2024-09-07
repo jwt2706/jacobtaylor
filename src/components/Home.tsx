@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Galaxy from "./Galaxy";
+import Vortex from "./Vortex";
 import Sidebar from "./Sidebar";
 import AnimatedCursor from "react-animated-cursor";
 import { IoPlanet } from "react-icons/io5";
@@ -72,7 +72,7 @@ const Home: React.FC = () => {
             jwt2706 {new Date().getFullYear()}
           </code>
         </footer>
-        <Galaxy />
+        <Vortex particleCount={400} baseSpeed={0.0} rangeSpeed={0.1} baseRadius={1.8} rangeRadius={2.5} rangeY={500} baseHue={180}/>
       </div>
     </div>
   );
