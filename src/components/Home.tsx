@@ -3,8 +3,7 @@ import Vortex from "./Vortex";
 import FloatingDock from './Dock';
 import { IoPlanet } from "react-icons/io5";
 import { FaGithub, FaEnvelope } from "react-icons/fa";
-import { SiGnuprivacyguard } from "react-icons/si";
-import { SiHuggingface } from "react-icons/si";
+import { SiGnuprivacyguard, SiHuggingface } from "react-icons/si";
 import "../assets/styles/app.scss";
 import "../assets/styles/tailwind.css";
 
@@ -39,7 +38,6 @@ const Home: React.FC = () => {
     <div className="animate-fade-in">
       <div className="app flex flex-col min-h-screen text-white">
         <main className="scrollable flex-grow overflow-y-auto">
- 
           <div>
             <br />
             <div className="mx-auto inline-block p-4">
@@ -56,8 +54,6 @@ const Home: React.FC = () => {
             <br />
             <code className="text-gray-400">
               I'm an open source enjoyer.
-              <br />
-              Check out some of my projects on the sidebar!
             </code>
           </div>
           <div className="flex items-center justify-center h-[35rem] w-full">
