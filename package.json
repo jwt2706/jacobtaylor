@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/jwt2706/jwt2706.github.io",
   "dependencies": {
+    "@tabler/icons-react": "^3.14.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.5.4",
     "gh-pages": "^6.1.1",
@@ -28,7 +29,7 @@
     "react": "^18.3.1",
     "react-animated-cursor": "^2.11.2",
     "react-dom": "^18.3.1",
-    "react-icons": "^5.2.1",
+    "react-icons": "^5.3.0",
     "react-router-dom": "^6.23.1",
     "sass": "^1.77.4",
     "simplex-noise": "^4.0.3",
