@@ -40,16 +40,20 @@ const Home: React.FC = () => {
 
   return (
     <div className="animate-fade-in flex flex-col text-white min-h-screen relative">
-      <div className="absolute top-0 left-0 m-4">
-        <button onClick={toggleLanguage} className="text-white">
-          <span className={isEnglish ? "underline" : ""}>En</span>/
-          <span className={!isEnglish ? "underline" : ""}>Fr</span>
-        </button>
-      </div>
       <main className="flex-grow">
-        <Banner isEnglish={isEnglish} />
+        <div className="absolute top-0 left-0 m-7 text-xl">
+          <button onClick={toggleLanguage} className="text-white">
+            <span className={isEnglish ? "underline" : ""}>En</span>/
+            <span className={!isEnglish ? "underline" : ""}>Fr</span>
+          </button>
+        </div>
+        <div className="mt-7">
+          <Banner isEnglish={isEnglish} />
+        </div>
       </main>
-      <FloatingDock items={dockitems} />
+      <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2">
+        <FloatingDock items={dockitems} />
+      </div>
       <Vortex particleCount={400} baseSpeed={0.0} rangeSpeed={0.7} baseRadius={1.8} rangeRadius={2.5} rangeY={500} baseHue={180}/>
     </div>
   );
