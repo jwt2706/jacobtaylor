@@ -2,7 +2,7 @@ import React from "react";
 
 const Banner = ({ isEnglish }: { isEnglish: boolean }) => {
   return (
-    <div className="banner-container bg-sky-950 bg-opacity-40 rounded-lg p-10 inline-block">
+    <div className="banner-container bg-sky-950 bg-opacity-40 rounded-lg px-10 py-8 inline-block">
       <h1 className="text-4xl font-bold mb-2 underline-animation">
         {isEnglish ? "Hey, I'm Jwt2706" : "Salut, je suis Jwt2706"}
       </h1>

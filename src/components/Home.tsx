@@ -43,8 +43,8 @@ const Home: React.FC = () => {
       <main className="flex-grow">
         <div className="absolute top-0 left-0 m-7 text-xl">
           <button onClick={toggleLanguage} className="text-white">
-            <span className={isEnglish ? "underline" : ""}>En</span>/
-            <span className={!isEnglish ? "underline" : ""}>Fr</span>
+            <span className={isEnglish ? "underline underline-offset-4" : ""}>En</span>/
+            <span className={!isEnglish ? "underline underline-offset-4" : ""}>Fr</span>
           </button>
         </div>
         <div className="mt-7">
