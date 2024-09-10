@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Banner from "./Banner";
 import Vortex from "./Vortex";
 import FloatingDock from './Dock';
@@ -32,13 +32,25 @@ const dockitems = [
 
 
 const Home: React.FC = () => {
+  const [isEnglish, setIsEnglish] = useState(true);
+
+  const toggleLanguage = () => {
+    setIsEnglish(!isEnglish);
+  };
+
   return (
-    <div className="animate-fade-in flex flex-col text-white">
-        <main>
-            <Banner />
-        </main>
-        <FloatingDock items={dockitems} />        
-        <Vortex particleCount={400} baseSpeed={0.0} rangeSpeed={0.1} baseRadius={1.8} rangeRadius={2.5} rangeY={500} baseHue={180}/>
+    <div className="animate-fade-in flex flex-col text-white min-h-screen relative">
+      <div className="absolute top-0 left-0 m-4">
+        <button onClick={toggleLanguage} className="text-white">
+          <span className={isEnglish ? "underline" : ""}>En</span>/
+          <span className={!isEnglish ? "underline" : ""}>Fr</span>
+        </button>
+      </div>
+      <main className="flex-grow">
+        <Banner isEnglish={isEnglish} />
+      </main>
+      <FloatingDock items={dockitems} />
+      <Vortex particleCount={400} baseSpeed={0.0} rangeSpeed={0.7} baseRadius={1.8} rangeRadius={2.5} rangeY={500} baseHue={180}/>
     </div>
   );
 }
