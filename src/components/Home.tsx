@@ -51,7 +51,7 @@ const Home: React.FC = () => {
           <Banner isEnglish={isEnglish} />
         </div>
       </main>
-      <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2">
+      <div className="absolute bottom-7 left-1/2 transform md:left-1/2 md:transform md:-translate-x-1/2 md:bottom-7 left-7">
         <FloatingDock items={dockitems} />
       </div>
       <Vortex particleCount={400} baseSpeed={0.0} rangeSpeed={0.7} baseRadius={1.8} rangeRadius={2.5} rangeY={500} baseHue={180}/>
