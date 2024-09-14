@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Banner from "./Banner";
 import Vortex from "./Vortex";
+import Carousel from "./Carousel";
 import FloatingDock from './Dock';
 import { FaGithub, FaEnvelope } from "react-icons/fa";
 import { SiGnuprivacyguard, SiHuggingface } from "react-icons/si";
@@ -14,12 +15,12 @@ const dockitems = [
     href: "mailto:hey@jwt2706.ca"
   },
   {
-    title: "Checkout my open-source projects!",
+    title: "Checkout my projects on Github!",
     icon: <FaGithub size={20} />,
     href: "https://github.com/jwt2706"
   },
   {
-    title: "Checkout my open-source AI models!",
+    title: "Checkout my models on Hugging Face!",
     icon: <SiHuggingface size={20} />,
     href: "https://huggingface.co/jwt2706"
   },
@@ -43,18 +44,22 @@ const Home: React.FC = () => {
       <main className="flex-grow">
         <div className="absolute top-0 left-0 m-7 text-xl">
           <button onClick={toggleLanguage} className="text-white">
-            <span className={isEnglish ? "underline underline-offset-4" : ""}>En</span>/
+            <span className={isEnglish ? "underline underline-offset-4" : ""}>En</span>
+            <span className="mx-1">/</span>
             <span className={!isEnglish ? "underline underline-offset-4" : ""}>Fr</span>
           </button>
         </div>
         <div className="mt-7">
           <Banner isEnglish={isEnglish} />
         </div>
+        <div className="mt-10">
+          <Carousel />
+        </div>
       </main>
       <div className="absolute bottom-7 left-1/2 transform md:left-1/2 md:transform md:-translate-x-1/2 md:bottom-7 left-7">
         <FloatingDock items={dockitems} />
       </div>
-      <Vortex particleCount={400} baseSpeed={0.0} rangeSpeed={0.7} baseRadius={1.8} rangeRadius={2.5} rangeY={500} baseHue={180}/>
+      <Vortex particleCount={400} baseSpeed={0.0} rangeSpeed={0.5} baseRadius={1.8} rangeRadius={2.5} rangeY={500} baseHue={180}/>
     </div>
   );
 }
