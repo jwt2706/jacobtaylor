@@ -15,7 +15,7 @@ interface ProjectCardProps {
   x: any; // Motion value for x position
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, x }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, x }) => { // , x
   const cardX = useTransform(x, (value: number) => value + index * 200);
   //const scale = useTransform(cardX, [-200, 0, 200], [0.8, 1.2, 0.8]); and put 'style={{ scale }}' in the motion.div
 
