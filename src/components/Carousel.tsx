@@ -19,10 +19,11 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
   const cardsRef = useRef<HTMLUListElement | null>(null);
   const seamlessLoopRef = useRef<GSAPTimeline | null>(null);
   const scrubRef = useRef<GSAPTween | null>(null);
-  
+  let iteration = 0;
+
   const spacing = 0.1;
   const snap = gsap.utils.snap(spacing);
-  
+
   const buildSeamlessLoop = (items: HTMLElement[], spacing: number): GSAPTimeline => {
     const overlap = Math.ceil(1 / spacing);
     const startTime = items.length * spacing + 0.5;
@@ -90,12 +91,12 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
         end: "+=3000", // Adjust based on your needs
         pin: ".gallery",
         onUpdate: (self) => {
-          if (self.progress === 1 && self.direction > 0) {
-            self.scroll(0); // Teleport to top
-          } else if (self.progress < 1e-5 && self.direction < 0) {
-            self.scroll(3000); // Teleport to bottom
+          if (self.progress === 1 && self.direction > 0 && !self.wrapping) {
+            wrapForward(self);
+          } else if (self.progress < 1e-5 && self.direction < 0 && !self.wrapping) {
+            wrapBackward(self);
           } else {
-            scrubRef.current!.vars.totalTime = snap(self.progress * seamlessLoopRef.current!.duration());
+            scrubRef.current!.vars.totalTime = snap((iteration + self.progress) * seamlessLoopRef.current!.duration());
             scrubRef.current!.invalidate().restart();
           }
         },
@@ -109,6 +110,25 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
       };
     }
   }, [projects]);
+
+  const wrapForward = (trigger: ScrollTrigger) => {
+    iteration++;
+    trigger.wrapping = true;
+    trigger.scroll(trigger.start + 1);
+  };
+
+  const wrapBackward = (trigger: ScrollTrigger) => {
+    iteration--;
+    if (iteration < 0) {
+      iteration = projects.length - 1; // Prevent stopping at the start
+      if (seamlessLoopRef.current) {
+        seamlessLoopRef.current.totalTime(seamlessLoopRef.current.totalTime() + seamlessLoopRef.current.duration() * projects.length);
+        scrubRef.current?.pause();
+      }
+    }
+    trigger.wrapping = true;
+    trigger.scroll(trigger.end - 1);
+  };
 
   return (
     <div className="gallery flex flex-col items-center">
