@@ -122,7 +122,7 @@ const Home: React.FC = () => {
         <div className="fixed mt-7 mx-auto w-full">
           <Banner isEnglish={isEnglish} />
         </div>
-        <div className="mt-10">
+        <div className="mt-[20%]">
           <Carousel projects={projects}/>
         </div>
       </main>

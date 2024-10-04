@@ -38,6 +38,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
     });
 
     const l = items.length + overlap * 2;
+    //console.log(l)
 
     gsap.set(items, { xPercent: 400, opacity: 0, scale: 0 });
 
@@ -88,7 +89,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
 
       const trigger = ScrollTrigger.create({
         start: 0,
-        end: "+=3000", // Adjust based on your needs
+        end: "+=3000",
         pin: ".gallery",
         onUpdate: (self) => {
           if (self.progress === 1 && self.direction > 0 && !self.wrapping) {
