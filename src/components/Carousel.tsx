@@ -2,19 +2,27 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const SCROLLSPEED = 0.1
-
 gsap.registerPlugin(ScrollTrigger);
 
-const ProjectCarousel: React.FC = () => {
+interface Project {
+  title: string;
+  description: string;
+  link: string;
+  github: string;
+}
+
+interface ProjectCarouselProps {
+  projects: Project[];
+}
+
+const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
   const cardsRef = useRef<HTMLUListElement | null>(null);
   const seamlessLoopRef = useRef<GSAPTimeline | null>(null);
   const scrubRef = useRef<GSAPTween | null>(null);
-  let iteration = 0;
-
+  
   const spacing = 0.1;
   const snap = gsap.utils.snap(spacing);
-
+  
   const buildSeamlessLoop = (items: HTMLElement[], spacing: number): GSAPTimeline => {
     const overlap = Math.ceil(1 / spacing);
     const startTime = items.length * spacing + 0.5;
@@ -66,40 +74,6 @@ const ProjectCarousel: React.FC = () => {
     return seamlessLoop;
   };
 
-  const scrubTo = (totalTime: number) => {
-    if (seamlessLoopRef.current && cardsRef.current) {
-      const cards = gsap.utils.toArray(cardsRef.current.children) as HTMLElement[];
-      const totalDuration = seamlessLoopRef.current.duration();
-      let progress = (totalTime - totalDuration * iteration) / totalDuration;
-
-      if (progress > 1) {
-        wrapForward();
-      } else if (progress < 0) {
-        wrapBackward();
-      } else {
-        const centerOffset = (window.innerWidth - 256) / 2; // 256 is the width of the card (w-64 in Tailwind)
-        ScrollTrigger.getById('scroll-trigger').scroll(progress * (3000 - centerOffset)); // Adjust to center the card
-      }
-    }
-  };
-
-  const wrapForward = () => {
-    iteration++;
-    ScrollTrigger.getById('scroll-trigger').scroll(0 + SCROLLSPEED);
-  };
-
-  const wrapBackward = () => {
-    iteration--;
-    if (iteration < 0) {
-      iteration = 9;
-      if (seamlessLoopRef.current) {
-        seamlessLoopRef.current.totalTime(seamlessLoopRef.current.totalTime() + seamlessLoopRef.current.duration() * 10);
-        scrubRef.current?.pause();
-      }
-    }
-    ScrollTrigger.getById('scroll-trigger').scroll(3000 - SCROLLSPEED);
-  };
-
   useEffect(() => {
     if (cardsRef.current) {
       const cards = gsap.utils.toArray(cardsRef.current.children) as HTMLElement[];
@@ -113,15 +87,15 @@ const ProjectCarousel: React.FC = () => {
 
       const trigger = ScrollTrigger.create({
         start: 0,
-        end: "+=3000",
+        end: "+=3000", // Adjust based on your needs
         pin: ".gallery",
         onUpdate: (self) => {
           if (self.progress === 1 && self.direction > 0) {
-            wrapForward();
+            self.scroll(0); // Teleport to top
           } else if (self.progress < 1e-5 && self.direction < 0) {
-            wrapBackward();
+            self.scroll(3000); // Teleport to bottom
           } else {
-            scrubRef.current!.vars.totalTime = snap((iteration + self.progress) * seamlessLoopRef.current!.duration());
+            scrubRef.current!.vars.totalTime = snap(self.progress * seamlessLoopRef.current!.duration());
             scrubRef.current!.invalidate().restart();
           }
         },
@@ -134,14 +108,19 @@ const ProjectCarousel: React.FC = () => {
         seamlessLoopRef.current?.kill();
       };
     }
-  }, []);
+  }, [projects]);
 
   return (
     <div className="gallery flex flex-col items-center">
       <ul className="cards flex overflow-hidden space-x-4" ref={cardsRef}>
-        {Array.from({ length: 10 }).map((_, index) => (
-          <li key={index} className="flex-shrink-0 w-64 h-40 bg-white rounded-lg shadow-lg flex items-center justify-center text-lg font-bold text-gray-800">
-            Card {index + 1}
+        {projects.map((project, index) => (
+          <li key={index} className="flex-shrink-0 w-64 h-40 bg-white rounded-lg shadow-lg flex flex-col items-center justify-center text-center">
+            <h3 className="font-bold text-lg text-gray-800">{project.title}</h3>
+            <p className="text-gray-600">{project.description}</p>
+            <div className="flex space-x-2 mt-2">
+              <a href={project.link} className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">View Project</a>
+              <a href={project.github} className="text-gray-600 underline" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
           </li>
         ))}
       </ul>
