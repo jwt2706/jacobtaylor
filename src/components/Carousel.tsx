@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import 'slick-carousel/slick/slick.css';
@@ -27,7 +27,7 @@ const CardCarousel: React.FC = () => {
     speed: 500,
     swipe: true,
     draggable: true,
-    beforeChange: (current, next) => {
+    beforeChange: (current: number, next: number) => {
       setActiveSlide(next);
     },
     responsive: [
@@ -59,9 +59,30 @@ const CardCarousel: React.FC = () => {
   };
 
   const [activeSlide, setActiveSlide] = React.useState(0);
+  const sliderRef = React.useRef<Slider | null>(null);
+
+  const handleScroll = (event: WheelEvent) => {
+    if (sliderRef.current) {
+      if (event.deltaY > 0) {
+        // Scrolling down
+        sliderRef.current.slickNext();
+      } else {
+        // Scrolling up
+        sliderRef.current.slickPrev();
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('wheel', handleScroll, { passive: false });
+
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+    };
+  }, []);
 
   return (
-    <Slider {...settings}>
+    <Slider ref={sliderRef} {...settings}>
       {items.map((item, index) => (
         <div key={item.id} className="px-8">
           <motion.div
