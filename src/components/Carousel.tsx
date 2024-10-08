@@ -8,7 +8,6 @@ interface Repo {
   id: number;
   name: string;
   description: string;
-  avatar_url: string;
   html_url: string;
   homepage?: string;
 }
@@ -80,7 +79,9 @@ const CardCarousel: React.FC = () => {
             id: repo.id,
             name: repo.name,
             description: repo.description.replace(/\[s!\]/g, '').trim() || 'No description available.',
-            avatar_url: repo.owner.avatar_url,
+            updated_at: repo.updated_at,
+            lang: repo.language,
+            updated: repo.updated_at.replace(/T.*/, ''),
             html_url: repo.html_url,
             homepage: repo.homepage,
           }));
@@ -111,9 +112,8 @@ const CardCarousel: React.FC = () => {
             }}
             transition={{ duration: 0.5 }}
           >
-            <img src={item.avatar_url} alt={item.name} className="w-full h-32 object-cover mb-4 rounded" />
             <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
-            <p className="text-gray-700 mb-4">{item.description}</p>
+            <p className="text-gray-700 mb-4">{item.description}<br /><br />{item.lang} {item.updated}</p>
             <a href={item.html_url} target="_blank" rel="noopener noreferrer" className="inline-block bg-blue-500 text-white px-4 py-2 rounded mb-2">
               View Repository
             </a>
