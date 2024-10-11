@@ -14,16 +14,20 @@ const Terrain = () => {
         const divisions = 32;
         const geometry = new THREE.PlaneGeometry(size, size, divisions, divisions);
         const vertices = geometry.attributes.position.array;
+        const scale = 0.1;
+        const height = 8;
 
+        for (let i = 0, j = 0; i< vertices.length; i+=3, j++) {
+            const x = (j % divisions) / divisions * size;
+            const y = Math.floor(j / divisions) / divisions * size;
+            vertices[i + 2] = noise.perlin2(x * scale, y * scale) * height;
+        }
 
-    for (let i = 0; i < vertices.length; i += 3) {
-      vertices[i + 2] = Math.random() * 5; // random height for a low poly effect
-    }
-
-    geometry.computeVertexNormals();
-    const material = new THREE.MeshStandardMaterial({ color: 0x228B22, flatShading: true });
-    return <mesh ref={terrainRef} geometry={geometry} material={material} rotation-x={-Math.PI / 2} />;
-  };
+        geometry.attributes.position.needsUpdate = true;
+        geometry.computeVertexNormals();
+        const material = new THREE.MeshStandardMaterial({ color: 0x228B22, flatShading: true });
+        return <mesh ref={terrainRef} geometry={geometry} material={material} rotation-x={-Math.PI / 2} />;  
+    };
 
   useFrame(() => {
     if (terrainRef.current) {
