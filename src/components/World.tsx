@@ -28,7 +28,7 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
 
     const minScrollLimit = 0;
     const maxScrollLimit = worldSize;
-    
+
     const terrain = useMemo(() => {
         const divisions = 32 * (PROJECT_SPACING / 4); // this seems like a good value
         const geometry = new THREE.PlaneGeometry(worldSize, worldSize, divisions, divisions);
@@ -36,12 +36,12 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
         const scale = 0.1;
         const height = 6;
         const colors = new Float32Array(vertices.length / 3 * 3); // color array
-    
+
         for (let i = 0, j = 0; i < vertices.length; i += 3, j++) {
             const x = (j % divisions) / divisions * worldSize;
             const y = Math.floor(j / divisions) / divisions * worldSize;
             vertices[i + 2] = NOISE.perlin2(x * scale, y * scale) * height;
-    
+
             // determine terrain color based on height
             if (vertices[i + 2] < WATER_LEVEL) {
                 // sand rgb
@@ -53,23 +53,20 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
                 colors[i] = 0.03;  // red
                 colors[i + 1] = 0.30; // green
                 colors[i + 2] = 0.03;  // blue
-
             }
         }
-    
+
         geometry.attributes.position.needsUpdate = true;
         geometry.attributes.color = new THREE.BufferAttribute(colors, 3);
         geometry.computeVertexNormals();
-    
+
         const material = new THREE.MeshStandardMaterial({
             vertexColors: true,
             flatShading: true,
         });
-    
+
         return <mesh geometry={geometry} material={material} rotation-x={-Math.PI / 2} position={[0, 0, (-worldSize / 4)]} />;
     }, [worldSize]);
-    
-    
 
     const generateWater = () => {
         const size = worldSize;
@@ -100,7 +97,8 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
             setSunPosition((prevPos) => [prevPos[0] + event.deltaY * 0.01, prevPos[1], prevPos[2]]);
         };
 
-        window.addEventListener('wheel', handleWheel);
+        // Use { passive: false } to allow preventDefault
+        window.addEventListener('wheel', handleWheel, { passive: false });
         return () => {
             window.removeEventListener('wheel', handleWheel);
         };
