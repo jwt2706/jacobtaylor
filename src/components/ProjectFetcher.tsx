@@ -5,6 +5,8 @@ interface Project {
     title: string;
     description: string;
     link: string;
+    githubPagesLink?: string;
+    languages?: string[];
 }
 
 const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => void }> = ({ onProjectsFetched }) => {
@@ -14,15 +16,30 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await fetch('https://api.github.com/users/jwt2706/repos');
-                const repos = await response.json();
-                const projects = repos
+                const reposResponse = await fetch('https://api.github.com/users/jwt2706/repos');
+                const repos = await reposResponse.json();
+
+                const projectsPromises = repos
                     .filter((repo: any) => repo.description && repo.description.includes('[s!]'))
-                    .map((repo: any) => ({
-                        title: repo.name,
-                        description: repo.description,
-                        link: repo.html_url,
-                    }));
+                    .map(async (repo: any) => {
+                        // get the languages for the repository
+                        const languagesResponse = await fetch(repo.languages_url);
+                        const languagesData = await languagesResponse.json();
+                        const languages = Object.keys(languagesData);
+
+                        // github pages link, if it exists
+                        const githubPagesLink = repo.homepage || `https://jwt2706.github.io/${repo.name}`;
+
+                        return {
+                            title: repo.name,
+                            description: repo.description,
+                            link: repo.html_url,
+                            githubPagesLink: githubPagesLink || undefined,
+                            languages: languages.length > 0 ? languages : undefined,
+                        };
+                    });
+
+                const projects = await Promise.all(projectsPromises);
                 onProjectsFetched(projects);
             } catch (err) {
                 setError('Failed to fetch projects :(');
