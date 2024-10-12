@@ -12,6 +12,9 @@ interface Project {
     title: string;
     description: string;
     link: string;
+    githubPagesLink?: string;
+    languages?: string[];
+    createdAt: string;
 }
 
 const World: React.FC<{ projects: Project[] }> = ({ projects }) => {
@@ -23,7 +26,7 @@ const World: React.FC<{ projects: Project[] }> = ({ projects }) => {
     const worldSize = (projects.length) * PROJECT_SPACING + 100;
 
     const minScrollLimit = 0;
-    const maxScrollLimit = worldSize - (PROJECT_SPACING * 6);
+    const maxScrollLimit = worldSize;
 
     const terrain = useMemo(() => {
         const divisions = 32 * (PROJECT_SPACING / 4);
@@ -47,7 +50,7 @@ const World: React.FC<{ projects: Project[] }> = ({ projects }) => {
     const generateWater = () => {
         const size = worldSize;
         const geometry = new THREE.PlaneGeometry(size, size);
-        const material = new THREE.MeshStandardMaterial({ color: 0x4BA6FF, transparent: true, opacity: 0.8 });
+        const material = new THREE.MeshStandardMaterial({ color: 0x4BA6FF, transparent: true, opacity: 0.85 });
         return <mesh geometry={geometry} material={material} position={[0, -1, 0]} rotation-x={-Math.PI / 2} />;
     };
 
@@ -114,14 +117,12 @@ const WorldCanvas = () => {
     return (
         <>
             <ProjectFetcher onProjectsFetched={setProjects} />
-            <Canvas camera={{ position: [0, 7, 20], fov: 75 }}>
+            <Canvas camera={{ position: [0, 5, 25], fov: 75 }}>
                 <ambientLight intensity={1} />
                 <World projects={projects} />
             </Canvas>
         </>
     );
 };
-
-
 
 export default WorldCanvas;

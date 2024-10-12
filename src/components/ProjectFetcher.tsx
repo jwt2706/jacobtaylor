@@ -36,7 +36,7 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
                             link: repo.html_url,
                             githubPagesLink: githubPagesLink || undefined,
                             languages: languages.length > 0 ? languages : undefined,
-                            createdAt: repo.created_at, // Add created_at
+                            createdAt: repo.created_at,
                         };
                     });
 
