@@ -4,8 +4,8 @@ import FloatingDock from './Dock';
 import World from './World';
 import { FaGithub, FaEnvelope } from "react-icons/fa";
 import { SiGnuprivacyguard, SiHuggingface } from "react-icons/si";
-import "../assets/styles/app.scss";
-import "../assets/styles/tailwind.css";
+import "../styles/app.scss";
+import "../styles/tailwind.css";
 
 const dockitems = [
 {

@@ -97,7 +97,6 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
             setSunPosition((prevPos) => [prevPos[0] + event.deltaY * 0.01, prevPos[1], prevPos[2]]);
         };
 
-        // Use { passive: false } to allow preventDefault
         window.addEventListener('wheel', handleWheel, { passive: false });
         return () => {
             window.removeEventListener('wheel', handleWheel);
@@ -125,11 +124,11 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
         if (groupRef.current) {
             groupRef.current.position.z += (targetPosition - groupRef.current.position.z) * 0.1; // smoothly update position
 
-            // Calculate new rotation based on mouse movement
+            // calculate new rotation based on mouse movement
             const targetRotationX = camera.rotation.x + mouse.y * 0.003;
             const targetRotationY = camera.rotation.y + mouse.x * -0.003;
 
-            // Limit the camera rotation to the max rotation
+            // limit the camera rotation to the max rotation
             camera.rotation.x = THREE.MathUtils.clamp(targetRotationX, -maxRotation, maxRotation);
             camera.rotation.y = THREE.MathUtils.clamp(targetRotationY, -maxRotation, maxRotation);
         }
