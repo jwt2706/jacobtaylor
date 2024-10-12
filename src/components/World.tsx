@@ -6,6 +6,7 @@ import { Noise } from 'noisejs';
 import ProjectFetcher from './ProjectFetcher';
 
 const PROJECT_SPACING = 10; // distance between each project
+const WATER_LEVEL = -1;
 const NOISE = new Noise(Math.random());
 
 interface Project {
@@ -17,7 +18,7 @@ interface Project {
     createdAt: string;
 }
 
-const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({ projects, cameraRotation }) => {
+const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({ projects }) => {
     const groupRef = useRef<THREE.Group>(null);
     const sunRef = useRef<THREE.Mesh>(null);
 
@@ -27,31 +28,54 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
 
     const minScrollLimit = 0;
     const maxScrollLimit = worldSize;
-
+    
     const terrain = useMemo(() => {
-        const divisions = 32 * (PROJECT_SPACING / 4);
+        const divisions = 32 * (PROJECT_SPACING / 4); // this seems like a good value
         const geometry = new THREE.PlaneGeometry(worldSize, worldSize, divisions, divisions);
         const vertices = geometry.attributes.position.array;
         const scale = 0.1;
         const height = 6;
-
+        const colors = new Float32Array(vertices.length / 3 * 3); // color array
+    
         for (let i = 0, j = 0; i < vertices.length; i += 3, j++) {
             const x = (j % divisions) / divisions * worldSize;
             const y = Math.floor(j / divisions) / divisions * worldSize;
             vertices[i + 2] = NOISE.perlin2(x * scale, y * scale) * height;
-        }
+    
+            // determine terrain color based on height
+            if (vertices[i + 2] < WATER_LEVEL) {
+                // sand rgb
+                colors[i] = 0.94; // red
+                colors[i + 1] = 0.86; // green
+                colors[i + 2] = 0.51; // blue
+            } else {
+                // grass rgb
+                colors[i] = 0.03;  // red
+                colors[i + 1] = 0.30; // green
+                colors[i + 2] = 0.03;  // blue
 
+            }
+        }
+    
         geometry.attributes.position.needsUpdate = true;
+        geometry.attributes.color = new THREE.BufferAttribute(colors, 3);
         geometry.computeVertexNormals();
-        const material = new THREE.MeshStandardMaterial({ color: 0x228B22, flatShading: true });
+    
+        const material = new THREE.MeshStandardMaterial({
+            vertexColors: true,
+            flatShading: true,
+        });
+    
         return <mesh geometry={geometry} material={material} rotation-x={-Math.PI / 2} position={[0, 0, (-worldSize / 4)]} />;
     }, [worldSize]);
+    
+    
 
     const generateWater = () => {
         const size = worldSize;
         const geometry = new THREE.PlaneGeometry(size, size);
         const material = new THREE.MeshStandardMaterial({ color: 0x4BA6FF, transparent: true, opacity: 0.85 });
-        return <mesh geometry={geometry} material={material} position={[0, -1, 0]} rotation-x={-Math.PI / 2} />;
+        return <mesh geometry={geometry} material={material} position={[0, WATER_LEVEL, 0]} rotation-x={-Math.PI / 2} />;
     };
 
     const generateSun = () => {
@@ -88,8 +112,8 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
     useEffect(() => {
         const handleMouseMove = (event: MouseEvent) => {
             const { clientX, clientY } = event;
-            const x = (clientX / window.innerWidth) * 2 - 1; // Normalize to [-1, 1]
-            const y = -(clientY / window.innerHeight) * 2 + 1; // Normalize to [-1, 1]
+            const x = (clientX / window.innerWidth) * 2 - 1; // normalize to [-1, 1]
+            const y = -(clientY / window.innerHeight) * 2 + 1; // normalize to [-1, 1]
             setMouse({ x, y });
         };
 
