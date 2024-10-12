@@ -1,4 +1,3 @@
-// ProjectFetcher.tsx
 import React, { useEffect, useState } from 'react';
 
 interface Project {
@@ -7,6 +6,7 @@ interface Project {
     link: string;
     githubPagesLink?: string;
     languages?: string[];
+    createdAt: string;
 }
 
 const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => void }> = ({ onProjectsFetched }) => {
@@ -36,10 +36,15 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
                             link: repo.html_url,
                             githubPagesLink: githubPagesLink || undefined,
                             languages: languages.length > 0 ? languages : undefined,
+                            createdAt: repo.created_at, // Add created_at
                         };
                     });
 
                 const projects = await Promise.all(projectsPromises);
+                
+                // sort projects by created_at date
+                projects.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                
                 onProjectsFetched(projects);
             } catch (err) {
                 setError('Failed to fetch projects :(');
