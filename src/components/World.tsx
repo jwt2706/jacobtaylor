@@ -3,22 +3,18 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Text } from '@react-three/drei';
 import { Noise } from 'noisejs';
+import ProjectFetcher from './ProjectFetcher'
 
 const PROJECT_SPACING = 10; // distance between each project
 const NOISE = new Noise(Math.random());
 
-const projects = [
-    { title: 'My Project 1', description: 'Description of project 1', link: 'http://example.com/1' },
-    { title: 'My Project 2', description: 'Description of project 2', link: 'http://example.com/2' },
-    { title: 'My Project 3', description: 'Description of project 3', link: 'http://example.com/3' },
-    { title: 'My Project 4', description: 'Description of project 4', link: 'http://example.com/4' },
-    { title: 'My Project 5', description: 'Description of project 5', link: 'http://example.com/5' },
-    { title: 'My Project 6', description: 'Description of project 6', link: 'http://example.com/6' },
-    { title: 'My Project 7', description: 'Description of project 7', link: 'http://example.com/7' },
-];
+interface Project {
+    title: string;
+    description: string;
+    link: string;
+}
 
-
-const World = () => {
+const World: React.FC<{ projects: Project[] }> = ({ projects }) => {
     const groupRef = useRef<THREE.Group>(null);
     const sunRef = useRef<THREE.Mesh>(null);
 
@@ -113,12 +109,19 @@ const World = () => {
 };
 
 const WorldCanvas = () => {
+    const [projects, setProjects] = useState<Project[]>([]);
+
     return (
-        <Canvas camera={{ position: [0, 7, 20], fov: 75 }}>
-            <ambientLight intensity={1} />
-            <World />
-        </Canvas>
+        <>
+            <ProjectFetcher onProjectsFetched={setProjects} />
+            <Canvas camera={{ position: [0, 7, 20], fov: 75 }}>
+                <ambientLight intensity={1} />
+                <World projects={projects} />
+            </Canvas>
+        </>
     );
 };
+
+
 
 export default WorldCanvas;
