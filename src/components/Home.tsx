@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Banner from "./Banner";
 import FloatingDock from './Dock';
-import Terrain from './Terrain';
+import World from './World';
 import { FaGithub, FaEnvelope } from "react-icons/fa";
 import { SiGnuprivacyguard, SiHuggingface } from "react-icons/si";
 import "../assets/styles/app.scss";
@@ -56,7 +56,7 @@ return (
 		<FloatingDock items={dockitems} />
 	</div>
 	<div className="z-[-1]" style={{ height: '100vh' }}>
-		<Terrain />
+		<World />
 	</div>
 	</div>
 );
