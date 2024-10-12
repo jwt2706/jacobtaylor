@@ -10,22 +10,22 @@ import "../styles/tailwind.css";
 const dockitems = [
 {
 	title: "Email Me!",
-	icon: <FaEnvelope size={20} />,
+	icon: <FaEnvelope size={30} />,
 	href: "mailto:hey@jwt2706.ca"
 },
 {
 	title: "Checkout my projects on Github!",
-	icon: <FaGithub size={20} />,
+	icon: <FaGithub size={30} />,
 	href: "https://github.com/jwt2706"
 },
 {
 	title: "Checkout my models on Hugging Face!",
-	icon: <SiHuggingface size={20} />,
+	icon: <SiHuggingface size={30} />,
 	href: "https://huggingface.co/jwt2706"
 },
 {
 	title: "Download my public GPG key!",
-	icon: <SiGnuprivacyguard size={20} />,
+	icon: <SiGnuprivacyguard size={30} />,
 	href: "https://jwt2706.github.io/jwt2706_public.key"
 }
 ]
