@@ -25,12 +25,12 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
     const [sunPosition, setSunPosition] = useState([-30, 20, -30]);
     const [targetPosition, setTargetPosition] = useState(0);
     const worldSize = (projects.length) * PROJECT_SPACING + 100;
+    const divisions = 32 * (PROJECT_SPACING / 4); // this seems like a good value
 
     const minScrollLimit = 0;
     const maxScrollLimit = worldSize;
 
     const terrain = useMemo(() => {
-        const divisions = 32 * (PROJECT_SPACING / 4); // this seems like a good value
         const geometry = new THREE.PlaneGeometry(worldSize, worldSize, divisions, divisions);
         const vertices = geometry.attributes.position.array;
         const scale = 0.1;
@@ -65,14 +65,46 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
             flatShading: true,
         });
 
-        return <mesh geometry={geometry} material={material} rotation-x={-Math.PI / 2} position={[0, 0, (-worldSize / 4)]} />;
+        return <mesh
+            geometry={geometry}
+            material={material}
+            rotation-x={-Math.PI / 2}
+            position={[0, 0, (-worldSize / 4)]}
+        />;
     }, [worldSize]);
 
+    const generateClouds = () => {
+        const geometry = new THREE.PlaneGeometry(worldSize, worldSize, divisions, divisions);
+        const vertices = geometry.attributes.position.array;
+        const scale = 0.1;
+
+        for (let i = 0, j = 0; i< vertices.length; i+=3, j++) {
+            const x = (j % divisions) / divisions * worldSize;
+            const y = Math.floor(j / divisions) / divisions * worldSize;
+            vertices[i + 2] = NOISE.perlin2(x, y);
+        }
+    
+        geometry.attributes.position.needsUpdate = true;
+        geometry.computeVertexNormals();
+
+        const material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.5 });
+        return <mesh
+            geometry={geometry}
+            material={material}
+            position={[0, WATER_LEVEL + 4, (-worldSize / 4)]}
+            rotation-x={-Math.PI / 2}
+        />;
+    };
+
     const generateWater = () => {
-        const size = worldSize;
-        const geometry = new THREE.PlaneGeometry(size, size);
+        const geometry = new THREE.PlaneGeometry(worldSize, worldSize);
         const material = new THREE.MeshStandardMaterial({ color: 0x4BA6FF, transparent: true, opacity: 0.85 });
-        return <mesh geometry={geometry} material={material} position={[0, WATER_LEVEL, 0]} rotation-x={-Math.PI / 2} />;
+        return <mesh
+            geometry={geometry}
+            material={material}
+            position={[0, WATER_LEVEL, (-worldSize / 4)]}
+            rotation-x={-Math.PI / 2}
+        />;
     };
 
     const generateSun = () => {
@@ -96,6 +128,7 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
 
             setSunPosition((prevPos) => [prevPos[0] + event.deltaY * 0.01, prevPos[1], prevPos[2]]);
         };
+
 
         window.addEventListener('wheel', handleWheel, { passive: false });
         return () => {
@@ -140,10 +173,11 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
             <group ref={groupRef}>
                 {terrain}
                 {generateWater()}
+                {generateClouds()}
                 {projects.map((project, index) => (
                     <Text
                         key={index}
-                        position={[0, 7, -(index + 1) * PROJECT_SPACING]}
+                        position={[0, 5, -(index + 1) * PROJECT_SPACING]}
                         fontSize={1}
                         color="white"
                         onClick={() => window.open(project.link, '_blank')}
@@ -162,7 +196,7 @@ const WorldCanvas = () => {
     return (
         <>
             <ProjectFetcher onProjectsFetched={setProjects} />
-            <Canvas camera={{ position: [0, 5, 20], fov: 75 }}>
+            <Canvas camera={{ position: [0, 7, 20], fov: 75 }}>
                 <ambientLight intensity={1} />
                 <World projects={projects} cameraRotation={new THREE.Euler()} />
             </Canvas>
