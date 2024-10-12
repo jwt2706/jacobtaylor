@@ -3,7 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Text } from '@react-three/drei';
 import { Noise } from 'noisejs';
-import ProjectFetcher from './ProjectFetcher'
+import ProjectFetcher from './ProjectFetcher';
 
 const PROJECT_SPACING = 10; // distance between each project
 const NOISE = new Noise(Math.random());
@@ -17,7 +17,7 @@ interface Project {
     createdAt: string;
 }
 
-const World: React.FC<{ projects: Project[] }> = ({ projects }) => {
+const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({ projects, cameraRotation }) => {
     const groupRef = useRef<THREE.Group>(null);
     const sunRef = useRef<THREE.Mesh>(null);
 
@@ -68,7 +68,6 @@ const World: React.FC<{ projects: Project[] }> = ({ projects }) => {
     useEffect(() => {
         const handleWheel = (event: WheelEvent) => {
             event.preventDefault(); // turn off regular scroll behavior
-            // update target position with clamping
             setTargetPosition((prev) => {
                 const newPosition = prev + event.deltaY * 0.01;
                 return Math.max(minScrollLimit, Math.min(maxScrollLimit, newPosition));
@@ -83,9 +82,34 @@ const World: React.FC<{ projects: Project[] }> = ({ projects }) => {
         };
     }, []);
 
-    useFrame(() => {
+    const [mouse, setMouse] = useState({ x: 0, y: 0 });
+    const maxRotation = 0.05; // in rads
+
+    useEffect(() => {
+        const handleMouseMove = (event: MouseEvent) => {
+            const { clientX, clientY } = event;
+            const x = (clientX / window.innerWidth) * 2 - 1; // Normalize to [-1, 1]
+            const y = -(clientY / window.innerHeight) * 2 + 1; // Normalize to [-1, 1]
+            setMouse({ x, y });
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, []);
+
+    useFrame(({ camera }) => {
         if (groupRef.current) {
             groupRef.current.position.z += (targetPosition - groupRef.current.position.z) * 0.1; // smoothly update position
+
+            // Calculate new rotation based on mouse movement
+            const targetRotationX = camera.rotation.x + mouse.y * 0.003;
+            const targetRotationY = camera.rotation.y + mouse.x * -0.003;
+
+            // Limit the camera rotation to the max rotation
+            camera.rotation.x = THREE.MathUtils.clamp(targetRotationX, -maxRotation, maxRotation);
+            camera.rotation.y = THREE.MathUtils.clamp(targetRotationY, -maxRotation, maxRotation);
         }
     });
 
@@ -117,9 +141,9 @@ const WorldCanvas = () => {
     return (
         <>
             <ProjectFetcher onProjectsFetched={setProjects} />
-            <Canvas camera={{ position: [0, 5, 25], fov: 75 }}>
+            <Canvas camera={{ position: [0, 5, 20], fov: 75 }}>
                 <ambientLight intensity={1} />
-                <World projects={projects} />
+                <World projects={projects} cameraRotation={new THREE.Euler()} />
             </Canvas>
         </>
     );
