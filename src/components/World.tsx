@@ -4,7 +4,8 @@ import * as THREE from 'three';
 import { Text } from '@react-three/drei';
 import { Noise } from 'noisejs';
 
-const PROJECT_SPACING = 10; // Distance between each project
+const PROJECT_SPACING = 10; // distance between each project
+const NOISE = new Noise(Math.random());
 
 const projects = [
     { title: 'My Project 1', description: 'Description of project 1', link: 'http://example.com/1' },
@@ -16,7 +17,6 @@ const projects = [
     { title: 'My Project 7', description: 'Description of project 7', link: 'http://example.com/7' },
 ];
 
-const noise = new Noise(Math.random()); // Initialize noise outside of the component
 
 const World = () => {
     const groupRef = useRef<THREE.Group>(null);
@@ -39,7 +39,7 @@ const World = () => {
         for (let i = 0, j = 0; i < vertices.length; i += 3, j++) {
             const x = (j % divisions) / divisions * worldSize;
             const y = Math.floor(j / divisions) / divisions * worldSize;
-            vertices[i + 2] = noise.perlin2(x * scale, y * scale) * height;
+            vertices[i + 2] = NOISE.perlin2(x * scale, y * scale) * height;
         }
 
         geometry.attributes.position.needsUpdate = true;
@@ -72,7 +72,7 @@ const World = () => {
             // update target position with clamping
             setTargetPosition((prev) => {
                 const newPosition = prev + event.deltaY * 0.01;
-                return Math.max(minScrollLimit, Math.min(maxScrollLimit, newPosition)); // Clamp the value
+                return Math.max(minScrollLimit, Math.min(maxScrollLimit, newPosition));
             });
 
             setSunPosition((prevPos) => [prevPos[0] + event.deltaY * 0.01, prevPos[1], prevPos[2]]);
@@ -114,7 +114,7 @@ const World = () => {
 
 const WorldCanvas = () => {
     return (
-        <Canvas camera={{ position: [0, 6, 20], fov: 75 }}>
+        <Canvas camera={{ position: [0, 7, 20], fov: 75 }}>
             <ambientLight intensity={1} />
             <World />
         </Canvas>
