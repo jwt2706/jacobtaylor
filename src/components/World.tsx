@@ -76,25 +76,33 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
     const generateClouds = () => {
         const geometry = new THREE.PlaneGeometry(worldSize, worldSize, divisions, divisions);
         const vertices = geometry.attributes.position.array;
-        const scale = 0.1;
-
-        for (let i = 0, j = 0; i< vertices.length; i+=3, j++) {
+    
+        for (let i = 0, j = 0; i < vertices.length; i += 3, j++) {
             const x = (j % divisions) / divisions * worldSize;
             const y = Math.floor(j / divisions) / divisions * worldSize;
-            vertices[i + 2] = NOISE.perlin2(x, y);
+            const noiseValue = NOISE.perlin2(x / 10, y / 10);
+            vertices[i + 2] = noiseValue * 5;
         }
     
         geometry.attributes.position.needsUpdate = true;
         geometry.computeVertexNormals();
-
-        const material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.5 });
-        return <mesh
-            geometry={geometry}
-            material={material}
-            position={[0, WATER_LEVEL + 4, (-worldSize / 4)]}
-            rotation-x={-Math.PI / 2}
-        />;
+    
+        const material = new THREE.MeshStandardMaterial({ 
+            color: 0xFFFFFF, 
+            transparent: true, 
+            opacity: 0.5,
+        });
+    
+        return (
+            <mesh
+                geometry={geometry}
+                material={material}
+                position={[0, WATER_LEVEL + 20, (-worldSize / 4)]}
+                rotation-x={-Math.PI / 2}
+            />
+        );
     };
+    
 
     const generateWater = () => {
         const geometry = new THREE.PlaneGeometry(worldSize, worldSize);
