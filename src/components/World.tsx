@@ -2,12 +2,12 @@ import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Text } from '@react-three/drei';
-import { Noise } from 'noisejs';
+import { createNoise2D } from 'simplex-noise';
 import ProjectFetcher from './ProjectFetcher';
 
 const PROJECT_SPACING = 10; // distance between each project
 const WATER_LEVEL = -1;
-const NOISE = new Noise(Math.random());
+const NOISE = createNoise2D();
 
 interface Project {
     title: string;
@@ -33,14 +33,14 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
     const terrain = useMemo(() => {
         const geometry = new THREE.PlaneGeometry(worldSize, worldSize, divisions, divisions);
         const vertices = geometry.attributes.position.array;
-        const scale = 0.1;
-        const height = 6;
+        const scale = 0.06;
+        const height = 4;
         const colors = new Float32Array(vertices.length / 3 * 3); // color array
 
         for (let i = 0, j = 0; i < vertices.length; i += 3, j++) {
             const x = (j % divisions) / divisions * worldSize;
             const y = Math.floor(j / divisions) / divisions * worldSize;
-            vertices[i + 2] = NOISE.perlin2(x * scale, y * scale) * height;
+            vertices[i + 2] = NOISE(x * scale, y * scale) * height;
 
             // determine terrain color based on height
             if (vertices[i + 2] < WATER_LEVEL) {
@@ -72,36 +72,6 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
             position={[0, 0, (-worldSize / 4)]}
         />;
     }, [worldSize]);
-
-    const generateClouds = () => {
-        const geometry = new THREE.PlaneGeometry(worldSize, worldSize, divisions, divisions);
-        const vertices = geometry.attributes.position.array;
-    
-        for (let i = 0, j = 0; i < vertices.length; i += 3, j++) {
-            const x = (j % divisions) / divisions * worldSize;
-            const y = Math.floor(j / divisions) / divisions * worldSize;
-            const noiseValue = NOISE.perlin2(x / 10, y / 10);
-            vertices[i + 2] = noiseValue * 5;
-        }
-    
-        geometry.attributes.position.needsUpdate = true;
-        geometry.computeVertexNormals();
-    
-        const material = new THREE.MeshStandardMaterial({ 
-            color: 0xFFFFFF, 
-            transparent: true, 
-            opacity: 0.5,
-        });
-    
-        return (
-            <mesh
-                geometry={geometry}
-                material={material}
-                position={[0, WATER_LEVEL + 20, (-worldSize / 4)]}
-                rotation-x={-Math.PI / 2}
-            />
-        );
-    };
     
 
     const generateWater = () => {
@@ -181,7 +151,6 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
             <group ref={groupRef}>
                 {terrain}
                 {generateWater()}
-                {generateClouds()}
                 {projects.map((project, index) => (
                     <Text
                         key={index}
