@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { Text } from '@react-three/drei';
+import { Text, Clouds, Cloud, Stars } from '@react-three/drei';
 import { createNoise2D } from 'simplex-noise';
 import ProjectFetcher from './ProjectFetcher';
 
@@ -145,12 +145,22 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
         }
     });
 
+
+    const clouds = useMemo(() => (
+        <Clouds material={THREE.MeshBasicMaterial} position={[0, 15, targetPosition]}>
+            <Cloud seed={1} segments={10} bounds={[30, 2, 100]} volume={20} color="white" />
+        </Clouds>
+    ), [targetPosition]); // Regenerate clouds only when targetPosition changes
+
     return (
         <>
+            
             {generateSun()}
+            {clouds}
             <group ref={groupRef}>
                 {terrain}
                 {generateWater()}
+                
                 {projects.map((project, index) => (
                     <Text
                         key={index}
@@ -174,6 +184,10 @@ const WorldCanvas = () => {
         <>
             <ProjectFetcher onProjectsFetched={setProjects} />
             <Canvas camera={{ position: [0, 7, 20], fov: 75 }}>
+                <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+                
+                
+                
                 <ambientLight intensity={1} />
                 <World projects={projects} cameraRotation={new THREE.Euler()} />
             </Canvas>
