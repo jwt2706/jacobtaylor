@@ -133,10 +133,29 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
                 dummyProjects.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                 onProjectsFetched(dummyProjects);
                 
-                
+
                 
             } catch (err) {
                 setError('Failed to fetch projects :(');
+                const failedToFetchProjects: Project[] = [
+                    {
+                        title: 'There was an error! D:',
+                        description: 'Whoops... I guess the github api is broken because it wasn\'t able to return any of my projects.',
+                        link: 'https://example.com/',
+                        githubPagesLink: undefined,
+                        languages: [],
+                        createdAt: '2023-01-01T00:00:00Z',
+                    },
+                    {
+                        title: 'Maybe you can fix it?',
+                        description: 'Are you using a vpn or is github blocked on your network? Maybe that\'s why it\'s not working.',
+                        link: 'https://example.com/',
+                        githubPagesLink: undefined,
+                        languages: [],
+                        createdAt: '2023-02-01T00:00:00Z',
+                    },
+                ];
+                onProjectsFetched(failedToFetchProjects);
             } finally {
                 setLoading(false);
             }
