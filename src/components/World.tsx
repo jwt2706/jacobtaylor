@@ -1,9 +1,11 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { Text, Clouds, Cloud, Stars } from '@react-three/drei';
+import { Clouds, Cloud, Stars } from '@react-three/drei';
 import { createNoise2D } from 'simplex-noise';
 import ProjectFetcher from './ProjectFetcher';
+
+import ProjectDisplay from './scene/ProjectDisplay';
 
 const PROJECT_SPACING = 10; // distance between each project
 const WATER_LEVEL = -1;
@@ -147,8 +149,8 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
 
 
     const clouds = useMemo(() => (
-        <Clouds material={THREE.MeshBasicMaterial} position={[0, 15, targetPosition]}>
-            <Cloud seed={1} segments={10} bounds={[30, 2, 100]} volume={20} color="white" />
+        <Clouds material={THREE.MeshBasicMaterial} position={[0, 25, targetPosition - 70]}>
+            <Cloud seed={1} segments={100} bounds={[50, 4, 100]} volume={30} color="white" />
         </Clouds>
     ), [targetPosition]); // Regenerate clouds only when targetPosition changes
 
@@ -156,22 +158,14 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
         <>
             
             {generateSun()}
-            {clouds}
+            
             <group ref={groupRef}>
                 {terrain}
                 {generateWater()}
-                
-                {projects.map((project, index) => (
-                    <Text
-                        key={index}
-                        position={[0, 5, -(index + 1) * PROJECT_SPACING]}
-                        fontSize={1}
-                        color="white"
-                        onClick={() => window.open(project.link, '_blank')}
-                    >
-                        {project.title}
-                    </Text>
-                ))}
+                {clouds}
+                <ProjectDisplay projects={projects} PROJECT_SPACING={PROJECT_SPACING} />
+
+
             </group>
         </>
     );
