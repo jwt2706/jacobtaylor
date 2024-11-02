@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 interface Project {
     title: string;
     description: string;
-    link: string;
+    link?: string;
     githubPagesLink?: string;
     languages?: string[];
     createdAt: string;
@@ -123,8 +123,8 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
                     {
                         title: 'Project J',
                         description: 'Description for Project J',
-                        link: 'https://example.com/project-j',
-                        githubPagesLink: 'https://example.github.io/project-j',
+                        link: undefined,
+                        githubPagesLink: undefined,
                         languages: ['TypeScript', 'Node.js'],
                         createdAt: '2023-10-01T00:00:00Z',
                     },
@@ -132,8 +132,6 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
                 // Sort dummy projects by createdAt date
                 dummyProjects.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                 onProjectsFetched(dummyProjects);
-                
-
                 
             } catch (err) {
                 setError('Failed to fetch projects :(');

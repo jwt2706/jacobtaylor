@@ -11,15 +11,6 @@ const PROJECT_SPACING = 10; // distance between each project
 const WATER_LEVEL = -1;
 const NOISE = createNoise2D();
 
-interface Project {
-    title: string;
-    description: string;
-    link: string;
-    githubPagesLink?: string;
-    languages?: string[];
-    createdAt: string;
-}
-
 const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({ projects }) => {
     const groupRef = useRef<THREE.Group>(null);
     const sunRef = useRef<THREE.Mesh>(null);

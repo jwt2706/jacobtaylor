@@ -5,8 +5,8 @@ import { RoundedBox } from '@react-three/drei';
 interface Project {
     title: string;
     description: string;
-    link: string;
-    githubPagesLink: string;
+    link?: string; // Made optional
+    githubPagesLink?: string; // Made optional
     languages: string[];
 }
 
@@ -20,7 +20,6 @@ const wrapText = (text: string, maxLength: number) => {
     const lines: string[] = [];
     let currentLine = '';
 
-    // sometimes the description is long.. and the drei lib doesn't have auto text wraping, so i'm just doing that myself
     words.forEach(word => {
         if ((currentLine + word).length > maxLength) {
             lines.push(currentLine.trim());
@@ -49,7 +48,6 @@ const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ projects, PROJECT_SPACI
 
                 return (
                     <group key={index} position={[xOffset, 7, zPosition]} rotation={[0, rotationY, 0]}>
-                        {/* Background with rounded corners */}
                         <RoundedBox 
                             args={[8.5, 4, 0.1]}
                             radius={0.3} 
@@ -59,7 +57,6 @@ const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ projects, PROJECT_SPACI
                             <meshStandardMaterial color="#085985" transparent opacity={0.85} />
                         </RoundedBox>
 
-                        {/* Title */}
                         <Text
                             position={[0, 1.2, 0.11]}
                             fontSize={0.7}
@@ -70,7 +67,6 @@ const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ projects, PROJECT_SPACI
                             {project.title}
                         </Text>
 
-                        {/* Description */}
                         {wrappedDescription.map((line, lineIndex) => (
                             <Text
                                 key={lineIndex}
@@ -84,7 +80,6 @@ const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ projects, PROJECT_SPACI
                             </Text>
                         ))}
 
-                        {/* Languages */}
                         <Text
                             position={[0, -0.2, 0.11]}
                             fontSize={0.2}
@@ -95,29 +90,31 @@ const ProjectDisplay: React.FC<ProjectDisplayProps> = ({ projects, PROJECT_SPACI
                             {project.languages.join(', ')}
                         </Text>
 
-                        {/* Project Link */}
-                        <mesh position={[-2, -0.8, 0.11]} onClick={() => window.open(project.link, '_blank')}>
-                            <Text
-                                fontSize={0.4}
-                                color="white"
-                                anchorX="center"
-                                anchorY="middle"
-                            >
-                                See Project Pages
-                            </Text>
-                        </mesh>
+                        {project.link && (
+                            <mesh position={[-2, -0.8, 0.11]} onClick={() => window.open(project.link, '_blank')}>
+                                <Text
+                                    fontSize={0.4}
+                                    color="white"
+                                    anchorX="center"
+                                    anchorY="middle"
+                                >
+                                    See Project Pages
+                                </Text>
+                            </mesh>
+                        )}
 
-                        {/* GitHub Link */}
-                        <mesh position={[2, -0.8, 0.11]} onClick={() => window.open(project.githubPagesLink, '_blank')}>
-                            <Text
-                                fontSize={0.4}
-                                color="white"
-                                anchorX="center"
-                                anchorY="middle"
-                            >
-                                See GitHub
-                            </Text>
-                        </mesh>
+                        {project.githubPagesLink && (
+                            <mesh position={[2, -0.8, 0.11]} onClick={() => window.open(project.githubPagesLink, '_blank')}>
+                                <Text
+                                    fontSize={0.4}
+                                    color="white"
+                                    anchorX="center"
+                                    anchorY="middle"
+                                >
+                                    See GitHub
+                                </Text>
+                            </mesh>
+                        )}
                     </group>
                 );
             })}
