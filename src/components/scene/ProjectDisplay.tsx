@@ -5,8 +5,8 @@ import { RoundedBox } from '@react-three/drei';
 interface Project {
     title: string;
     description: string;
-    link?: string; // Made optional
-    githubPagesLink?: string; // Made optional
+    link?: string;
+    githubPagesLink?: string;
     languages: string[];
 }
 

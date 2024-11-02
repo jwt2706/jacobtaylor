@@ -7,6 +7,14 @@ import ProjectFetcher from './ProjectFetcher';
 
 import ProjectDisplay from './scene/ProjectDisplay';
 
+interface Project {
+    title: string;
+    description: string;
+    link?: string;
+    githubPagesLink?: string;
+    languages: string[];
+}
+
 const PROJECT_SPACING = 10; // distance between each project
 const WATER_LEVEL = -1;
 const NOISE = createNoise2D();
@@ -97,7 +105,7 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
                 return Math.max(minScrollLimit, Math.min(maxScrollLimit, newPosition));
             });
 
-            setSunPosition((prevPos) => [prevPos[0] + event.deltaY * 0.01, prevPos[1], prevPos[2]]);
+            setSunPosition((prevPos) => [prevPos[0], prevPos[1] - event.deltaY * 0.01, prevPos[2]]);
         };
 
 
