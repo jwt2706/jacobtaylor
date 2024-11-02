@@ -16,7 +16,7 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                /*
+                
                 const reposResponse = await fetch('https://api.github.com/users/jwt2706/repos');
                 const repos = await reposResponse.json();
 
@@ -42,9 +42,9 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
                 const projects = await Promise.all(projectsPromises);
                 projects.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                 onProjectsFetched(projects);
-                */
+                
 
-                const dummyProjects: Project[] = [
+               /* const dummyProjects: Project[] = [
                     {
                         title: 'Project A',
                         description: 'Description for Project A',
@@ -132,6 +132,7 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
                 dummyProjects.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
                 onProjectsFetched(dummyProjects);
+                */
             } catch (err) {
                 setError('Failed to fetch projects :(');
             } finally {

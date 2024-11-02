@@ -40,7 +40,7 @@ const toggleLanguage = () => {
 
 return (
 	<div className="animate-fade-in flex flex-col text-white min-h-screen relative">
-	<main className="flex-grow">
+	{ /*<main className="flex-grow">
 		<div className="fixed top-0 left-0 m-7 text-xl z-10">
 		<button onClick={toggleLanguage} className="text-white">
 			<span className={isEnglish ? "underline underline-offset-4" : ""}>En</span>
@@ -54,7 +54,7 @@ return (
 	</main>
 	<div className="fixed bottom-7 left-1/2 transform md:left-1/2 md:transform md:-translate-x-1/2 md:bottom-7 left-7">
 		<FloatingDock items={dockitems} />
-	</div>
+	</div> */}
 	<div className="z-[-1]" style={{ height: '100vh' }}>
 		<World />
 	</div>
