@@ -16,12 +16,14 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
     useEffect(() => {
         const fetchProjects = async () => {
             try {
+
+                /*
                 
                 const reposResponse = await fetch('https://api.github.com/users/jwt2706/repos');
                 const repos = await reposResponse.json();
 
                 const projectsPromises = repos
-                    .filter((repo: any) => repo.description && repo.description.includes('[s!]'))
+                    .filter((repo: any) => repo.description && repo.description.includes('[!website]'))
                     .map(async (repo: any) => {
                         const languagesResponse = await fetch(repo.languages_url);
                         const languagesData = await languagesResponse.json();
@@ -31,20 +33,21 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
 
                         return {
                             title: repo.name,
-                            description: repo.description,
+                            description: repo.description.replace(/\[!\s*website\]/gi, '').trim(),
                             link: repo.html_url,
                             githubPagesLink: githubPagesLink || undefined,
                             languages: languages.length > 0 ? languages : undefined,
                             createdAt: repo.created_at,
-                        };
+                        };                        
                     });
 
                 const projects = await Promise.all(projectsPromises);
                 projects.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                 onProjectsFetched(projects);
                 
+                */
 
-               /* const dummyProjects: Project[] = [
+                const dummyProjects: Project[] = [
                     {
                         title: 'Project A',
                         description: 'Description for Project A',
@@ -126,13 +129,12 @@ const ProjectFetcher: React.FC<{ onProjectsFetched: (projects: Project[]) => voi
                         createdAt: '2023-10-01T00:00:00Z',
                     },
                 ];
-                
-
                 // Sort dummy projects by createdAt date
                 dummyProjects.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-
                 onProjectsFetched(dummyProjects);
-                */
+                
+                
+                
             } catch (err) {
                 setError('Failed to fetch projects :(');
             } finally {
