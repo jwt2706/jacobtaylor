@@ -22,9 +22,12 @@ const NOISE = createNoise2D();
 const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({ projects }) => {
     const groupRef = useRef<THREE.Group>(null);
     const sunRef = useRef<THREE.Mesh>(null);
+    const moonRef = useRef<THREE.Mesh>(null);
 
-    const [sunPosition, setSunPosition] = useState([-30, 20, -30]);
+    const [sunPosition, setSunPosition] = useState([-30, 60, -100]);
+    const [moonPosition, setMoonPosition] = useState([30, -20, -100]);
     const [targetPosition, setTargetPosition] = useState(0);
+
     const worldSize = (projects.length) * PROJECT_SPACING + 100;
     const divisions = 32 * (PROJECT_SPACING / 4); // this seems like a good value
 
@@ -87,7 +90,7 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
     };
 
     const generateSun = () => {
-        const geometry = new THREE.SphereGeometry(3, 16, 16);
+        const geometry = new THREE.SphereGeometry(5, 16, 16);
         const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         return (
             <>
@@ -95,6 +98,12 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
                 <directionalLight position={sunPosition} intensity={5} />
             </>
         );
+    };
+
+    const generateMoon = () => {
+        const geometry = new THREE.SphereGeometry(5, 16, 16);
+        const material = new THREE.MeshBasicMaterial({ color: 0x888888 });
+        return <mesh ref={moonRef} geometry={geometry} material={material} position={moonPosition} />;
     };
 
     useEffect(() => {
@@ -132,6 +141,34 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
         };
     }, []);
 
+    useEffect(() => {
+        const handleWheel = (event: WheelEvent) => {
+            event.preventDefault(); // turn off regular scroll behavior
+            setTargetPosition((prev) => {
+                const newPosition = prev + event.deltaY * 0.01;
+                return Math.max(minScrollLimit, Math.min(maxScrollLimit, newPosition));
+            });
+    
+            setSunPosition((prevPos) => {
+                const newY = prevPos[1] - event.deltaY * 0.01;
+                const limitedY = Math.min(newY, 60);
+                return [prevPos[0], limitedY, prevPos[2]];
+            });
+
+            setMoonPosition((prevPos) => {
+                const newY = prevPos[1] + event.deltaY * 0.01;
+                const limitedY = Math.min(newY, 60);
+                return [prevPos[0], limitedY, prevPos[2]];
+            });
+        };
+    
+        window.addEventListener('wheel', handleWheel, { passive: false });
+        return () => {
+            window.removeEventListener('wheel', handleWheel);
+        };
+    }, [targetPosition, maxScrollLimit]);
+    
+
     useFrame(({ camera }) => {
         if (groupRef.current) {
             groupRef.current.position.z += (targetPosition - groupRef.current.position.z) * 0.1; // smoothly update position
@@ -155,16 +192,13 @@ const World: React.FC<{ projects: Project[]; cameraRotation: THREE.Euler }> = ({
 
     return (
         <>
-            
             {generateSun()}
-            
+            {generateMoon()}
             <group ref={groupRef}>
                 {terrain}
                 {generateWater()}
                 {clouds}
                 <ProjectDisplay projects={projects} PROJECT_SPACING={PROJECT_SPACING} />
-
-
             </group>
         </>
     );
