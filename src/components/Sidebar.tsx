@@ -58,7 +58,7 @@ const Sidebar: React.FC = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data: Repo[] = await response.json();
-        return data.filter((repo) => repo.description && repo.description.includes("[s!]"));
+        return data.filter((repo) => repo.description && repo.description.includes("[!website]"));
       } catch (error) {
         setError(error as Error);
       }
@@ -118,11 +118,11 @@ const Sidebar: React.FC = () => {
                 <li
                   key={repo.id}
                   className="mb-2 px-4 py-3 hover:bg-gray-700 rounded border border-gray-500 border-opacity-50"
-                  title={repo.description.replace("[s!]", "")}
+                  title={repo.description.replace("[!website]", "")}
                 >
                   <span className="block text-left">{repo.name}</span>
                   <span className="block text-sm mb-2 text-gray-400 truncate">
-                    {repo.description.replace("[s!]", "")}
+                    {repo.description.replace("[!website]", "")}
                   </span>
                   <div className="flex space-x-2">
                     {repo.has_pages && (
