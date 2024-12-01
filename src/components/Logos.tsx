@@ -13,7 +13,7 @@ const Logos: React.FC = () => {
             });
 
             icon.addEventListener("mouseleave", () => {
-                gsap.to(icon, { rotationZ: 360, duration: 0.6, ease: "power1.out" });
+                gsap.to(icon, { rotationZ: 0, duration: 0.6, ease: "power1.out" });
             });
         });
 
@@ -36,10 +36,10 @@ const Logos: React.FC = () => {
             <a href="https://devpost.com/jwt2706" target="_blank" rel="noopener noreferrer" className="icon text-4xl text-gray-800">
                 <SiDevpost />
             </a>
-            <a href="mailto:jwt2706@example.com" className="icon text-4xl text-gray-800">
+            <a href="mailto:hey@jwt2706.ca" className="icon text-4xl text-gray-800">
                 <FaEnvelope />
             </a>
-            <a href="https://example.com/gpg-key" target="_blank" rel="noopener noreferrer" className="icon text-4xl text-gray-800">
+            <a href="https://jwt2706.github.io/jwt2706_public.key" target="_blank" rel="noopener noreferrer" className="icon text-4xl text-gray-800">
                 <FaKey />
             </a>
         </div>
