@@ -22,6 +22,7 @@
   "homepage": "https://github.com/jwt2706/jwt2706.github.io",
   "dependencies": {
     "gh-pages": "^6.1.1",
+    "gsap": "^3.12.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
