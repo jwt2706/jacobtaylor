@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 interface Repo {
     id: number;
@@ -46,25 +47,28 @@ const ProjectFetcher: React.FC = () => {
 
     return (
         <div>
-            <h2>My GitHub Repositories</h2>
-            <div>
+            <h2 className="text-2xl font-bold mb-4">My GitHub Repositories</h2>
+            <div className="flex flex-wrap gap-5">
                 {repos.map((repo) => (
-                    <div key={repo.id} className="repo">
-                        <h3>
-                            <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+                    <div key={repo.id} className="repo border border-gray-300 rounded-lg p-4 w-72 shadow-lg transition-transform transform hover:-translate-y-1">
+                        <h3 className="text-xl font-semibold">
+                            <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                                 {repo.name}
                             </a>
                         </h3>
-                        <p>{repo.description}</p>
-                        {repo.homepage && (
-                            <p>
-                                <a href={repo.homepage} target="_blank" rel="noopener noreferrer">
-                                    View Project
+                        <p className="mt-2">{repo.description}</p>
+                        <div className="repo-links flex gap-3 mt-3">
+                            <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600 hover:underline">
+                                <FaGithub /> GitHub
+                            </a>
+                            {repo.homepage && (
+                                <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600 hover:underline">
+                                    <FaExternalLinkAlt /> View Project
                                 </a>
-                            </p>
-                        )}
-                        <p>⭐ {repo.stargazers_count} | 🍴 {repo.forks_count}</p>
-                        <p>Languages: {languages[repo.id]?.join(", ") || "Loading..."}</p>
+                            )}
+                        </div>
+                        <p className="mt-2">⭐ {repo.stargazers_count} | 🍴 {repo.forks_count}</p>
+                        <p className="mt-2">Languages: {languages[repo.id]?.join(", ") || "Loading..."}</p>
                     </div>
                 ))}
             </div>
