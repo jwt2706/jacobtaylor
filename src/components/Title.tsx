@@ -7,11 +7,11 @@ const Title: React.FC = () => {
 
         letters.forEach((letter) => {
             letter.addEventListener("mouseenter", () => {
-                gsap.to(letter, { y: -10, duration: 0.3, ease: "power1.out" });
+                gsap.to(letter, { y: -10, duration: 0.3, ease: "bounce.out" });
             });
 
             letter.addEventListener("mouseleave", () => {
-                gsap.to(letter, { y: 0, duration: 0.3, ease: "power1.out" });
+                gsap.to(letter, { y: 0, duration: 0.3, ease: "bounce.out" });
             });
         });
 

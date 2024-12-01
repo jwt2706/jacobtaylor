@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Doto&family=Source+Code+Pro&display=swap');
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+body {
+    font-family: 'Source Code Pro', monospace;
+    font-display: swap;
+
+    h1 {
+        font-family: 'Doto', sans-serif;
+    }
+}
