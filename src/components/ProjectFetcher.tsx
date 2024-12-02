@@ -15,6 +15,7 @@ const ProjectFetcher: React.FC = () => {
     const [repos, setRepos] = useState<Repo[]>([]);
     const [languages, setLanguages] = useState<{ [key: number]: string[] }>({});
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         fetch("https://api.github.com/users/jwt2706/repos")
@@ -45,16 +46,21 @@ const ProjectFetcher: React.FC = () => {
                             }));
                         });
                 });
+
+                setLoading(false);
             })
             .catch((error) => {
                 console.error("Error fetching repos:", error);
                 setError(error.message);
+                setLoading(false);
             });
     }, []);
 
     return (
         <div className="flex flex-col items-center">
-            {error ? (
+            {loading ? (
+                <p className="text-blue-500">Loading...</p>
+            ) : error ? (
                 <p className="text-red-500">There was a problem fetching the repositories: {error}</p>
             ) : (
                 <div className="flex flex-col gap-5 w-full max-w-2xl">

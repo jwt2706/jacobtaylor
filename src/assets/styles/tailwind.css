@@ -8,6 +8,6 @@ body {
     font-display: swap;
 
     h1 {
-        font-family: 'Doto', sans-serif;
+        font-family: 'Doto', monospace;
     }
 }
