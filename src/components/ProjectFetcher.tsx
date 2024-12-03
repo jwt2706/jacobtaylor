@@ -63,10 +63,15 @@ const ProjectFetcher: React.FC = () => {
 
     useEffect(() => {
         cardsRef.current.forEach((card, index) => {
+            const fromDirection = index % 2 === 0 ? { x: -200, opacity: 0 } : { x: 200, opacity: 0 };
             gsap.fromTo(card,
-                { opacity: 0, y: 50 },
+                fromDirection,
                 {
-                    opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.5, // Quicker animation
+                    ease: "power2.out", // Smoother easing function
+                    scrollTrigger: {
                         trigger: card,
                         start: "top 80%",
                         end: "bottom 60%",
@@ -90,14 +95,14 @@ const ProjectFetcher: React.FC = () => {
             ) : (
                 <div className="flex flex-col gap-5 w-full max-w-2xl">
                     {repos.map((repo, index) => (
-                        <div key={repo.id} className="repo border border-gray-300 rounded-lg p-4 shadow-lg transition-transform transform hover:-translate-y-1 bg-white" ref={el => cardsRef.current[index] = el!}>
-                            <h3 className="text-xl font-semibold">
+                        <div key={repo.id} className="repo bg-white bg-opacity-10 backdrop-blur-lg border border-gray-300 rounded-lg p-4 shadow-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 ease-in-out" ref={el => cardsRef.current[index] = el!}>
+                            <h3 className="text-xl font-semibold text-center">
                                 <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                                     {repo.name}
                                 </a>
                             </h3>
-                            <p className="mt-2">{repo.description}</p>
-                            <div className="repo-links flex gap-3 mt-3">
+                            <p className="mt-2 text-center">{repo.description}</p>
+                            <div className="repo-links flex justify-center gap-3 mt-3">
                                 <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600 hover:underline">
                                     <FaGithub /> GitHub
                                 </a>
@@ -107,7 +112,7 @@ const ProjectFetcher: React.FC = () => {
                                     </a>
                                 )}
                             </div>
-                            <p className="mt-2">Languages: {languages[repo.id]?.join(", ") || "Loading..."}</p>
+                            <p className="mt-2 text-center">Languages: {languages[repo.id]?.join(", ") || "Loading..."}</p>
                         </div>
                     ))}
                 </div>
