@@ -37,7 +37,7 @@ const Logos: React.FC = () => {
                 <a href="https://huggingface.co/jwt2706" target="_blank" rel="noopener noreferrer" className="icon">
                     <SiHuggingface />
                 </a>
-                <span className="text-sm mt-2">Hugging Face</span>
+                <span className="text-sm mt-2">HuggingFace</span>
             </div>
             <div className="flex flex-col items-center">
                 <a href="https://jwt2706.itch.io" target="_blank" rel="noopener noreferrer" className="icon">

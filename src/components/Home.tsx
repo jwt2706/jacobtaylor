@@ -4,6 +4,7 @@ import ProjectFetcher from "./ProjectFetcher";
 import Title from "./Title";
 import Logos from "./Logos";
 import Intro from "./Intro";
+import Footer from "./Footer";
 
 const Home: React.FC = () => {
   return (
@@ -13,13 +14,10 @@ const Home: React.FC = () => {
         <Logos />
         <hr className="my-8 border-t-2 border-black w-full" />
         <Intro />
-
-
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-
+        <hr className="my-8 border-t-2 border-black w-full" />
         <h2 className="text-2xl font-bold mb-4 text-center">A few of my projects</h2>
         <ProjectFetcher />
+        <Footer />
       </div>
     </div>
   );
