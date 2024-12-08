@@ -62,15 +62,13 @@ const ProjectFetcher: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        cardsRef.current.forEach((card, index) => {
-            const fromDirection = index % 2 === 0 ? { x: -window.innerWidth, opacity: 0 } : { x: window.innerWidth, opacity: 0 };
+        cardsRef.current.forEach((card) => {
             gsap.fromTo(card,
-                fromDirection,
+                { opacity: 0.5 },
                 {
-                    x: 0,
                     opacity: 1,
                     duration: 0.5,
-                    ease: "power2.out",
+                    ease: "power1.out",
                     scrollTrigger: {
                         trigger: card,
                         start: "top 80%",
@@ -87,32 +85,32 @@ const ProjectFetcher: React.FC = () => {
             {loading ? (
                 <p className="text-blue-500">Loading...</p>
             ) : error ? (
-                <p className="text-red-500">
-                    There was a problem fetching the repositories: {error}
+                <p className="text-red-500 text-justify">
+                    {error}
                     <br />
-                    Sorry about that... You can see them directly on GitHub <a href="https://github.com/jwt2706" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">here</a>.
+                    Sorry... There was a problem fetching the repositories from GitHub. Try refreshing the page. If that doesn't work you can see them by clicking <a href="https://github.com/jwt2706" target="_blank" rel="noopener noreferrer" className="text-green-500 underline">here</a>, or visiting some of my links above.
                 </p>
             ) : (
-                <div className="flex flex-col gap-5 w-full max-w-2xl">
+                <div className="grid grid-cols-1 gap-8 w-full max-w-4xl px-4">
                     {repos.map((repo, index) => (
-                        <div key={repo.id} className="repo bg-white bg-opacity-10 backdrop-blur-lg border border-gray-300 rounded-lg p-4 shadow-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 ease-in-out" ref={el => cardsRef.current[index] = el!}>
-                            <h3 className="text-xl font-semibold text-center">
+                        <div key={repo.id} className="repo bg-white bg-opacity-10 backdrop-blur-lg border border-gray-300 rounded-lg p-6 shadow-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 ease-in-out" ref={el => cardsRef.current[index] = el!}>
+                            <h3 className="text-3xl font-semibold text-center">
                                 <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="hover:underline">
                                     {repo.name}
                                 </a>
                             </h3>
-                            <p className="mt-2 text-center">{repo.description}</p>
-                            <div className="repo-links flex justify-center gap-3 mt-3">
-                                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
-                                    <FaGithub /> GitHub
+                            <p className="text-sm text-center mb-4">{languages[repo.id]?.join(", ") || "Loading..."}</p>
+                            <p className="text-center mb-4">{repo.description}</p>
+                            <div className="repo-links flex justify-center gap-4 mb-4">
+                                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline text-3xl">
+                                    <FaGithub />
                                 </a>
                                 {repo.homepage && (
-                                    <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
-                                        <FaExternalLinkAlt /> View Project
+                                    <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline text-3xl">
+                                        <FaExternalLinkAlt />
                                     </a>
                                 )}
                             </div>
-                            <p className="mt-2 text-center">Languages: {languages[repo.id]?.join(", ") || "Loading..."}</p>
                         </div>
                     ))}
                 </div>
