@@ -93,7 +93,7 @@ const ProjectFetcher: React.FC = () => {
             ) : (
                 <div className="grid grid-cols-1 gap-8 w-full max-w-4xl px-4">
                     {repos.map((repo, index) => (
-                        <div key={repo.id} className="repo bg-white bg-opacity-10 backdrop-blur-lg border border-gray-300 rounded-lg p-6 shadow-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 ease-in-out" ref={el => cardsRef.current[index] = el!}>
+                        <div key={repo.id} className="repo bg-white bg-opacity-10 backdrop-blur-lg border border-gray-300 rounded-lg p-6 shadow-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 ease-in-out hover:opacity-100" ref={el => cardsRef.current[index] = el!}>
                             <h3 className="text-3xl font-semibold text-center">
                                 <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="hover:underline">
                                     {repo.name}
@@ -102,11 +102,11 @@ const ProjectFetcher: React.FC = () => {
                             <p className="text-sm text-center mb-4">{languages[repo.id]?.join(", ") || "Loading..."}</p>
                             <p className="text-center mb-4">{repo.description}</p>
                             <div className="repo-links flex justify-center gap-4 mb-4">
-                                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline text-3xl">
+                                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline text-2xl transition-transform transform hover:scale-125 duration-300 ease-in-out">
                                     <FaGithub />
                                 </a>
                                 {repo.homepage && (
-                                    <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline text-3xl">
+                                    <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline text-2xl transition-transform transform hover:scale-125 duration-300 ease-in-out">
                                         <FaExternalLinkAlt />
                                     </a>
                                 )}
