@@ -4,10 +4,10 @@ const Footer: React.FC = () => {
     return (
         <footer className="text-white py-4 my-8 rounded-lg">
             <div className="container mx-auto text-center">
-                <p>&copy; {new Date().getFullYear()} jwt2706. All rights reserved.</p>
+                <p>&copy; {new Date().getFullYear()} jwt2706 | All rights reserved.</p>
                 <p>
-                    <a href="https://github.com/jwt2706" className="text-blue-400 hover:underline">GitHub</a> |
-                    <a href="mailto:hey@jwt2706.ca" className="text-blue-400 hover:underline"> Contact</a>
+                    <a href="https://github.com/jwt2706" className="text-green-500 hover:underline">GitHub</a> |
+                    <a href="mailto:hey@jwt2706.ca" className="text-green-500 hover:underline"> Contact</a>
                 </p>
             </div>
         </footer>

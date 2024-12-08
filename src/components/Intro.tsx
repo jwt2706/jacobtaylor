@@ -11,7 +11,7 @@ const Intro: React.FC = () => {
                 I'm <b>jwt2706</b>, I'm from 🇨🇦 and I like building stuff. I've been programming for about 10 years now. Started out with webdev and robotics, and now I'm venturing more into AI/ML and low level programming. You can check out some of my public project below.
                 <br />
                 <br />
-                If you wanna chat, feel free to reach out at <a href="mailto:hey@jwt2706.ca" className="text-sky-800 underline underline-offset-4">hey@jwt2706.ca</a>. :D
+                If you wanna chat, feel free to reach out at <a href="mailto:hey@jwt2706.ca" className="underline bg-slate-950 rounded-md px-1 py-1">hey@jwt2706.ca</a>. :D
             </p>
         </div>
     );

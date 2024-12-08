@@ -63,19 +63,19 @@ const ProjectFetcher: React.FC = () => {
 
     useEffect(() => {
         cardsRef.current.forEach((card, index) => {
-            const fromDirection = index % 2 === 0 ? { x: -200, opacity: 0 } : { x: 200, opacity: 0 };
+            const fromDirection = index % 2 === 0 ? { x: -window.innerWidth, opacity: 0 } : { x: window.innerWidth, opacity: 0 };
             gsap.fromTo(card,
                 fromDirection,
                 {
                     x: 0,
                     opacity: 1,
-                    duration: 0.5, // Quicker animation
-                    ease: "power2.out", // Smoother easing function
+                    duration: 0.5,
+                    ease: "power2.out",
                     scrollTrigger: {
                         trigger: card,
                         start: "top 80%",
                         end: "bottom 60%",
-                        toggleActions: "play none none none"
+                        toggleActions: "play reverse play reverse"
                     }
                 }
             );
@@ -97,17 +97,17 @@ const ProjectFetcher: React.FC = () => {
                     {repos.map((repo, index) => (
                         <div key={repo.id} className="repo bg-white bg-opacity-10 backdrop-blur-lg border border-gray-300 rounded-lg p-4 shadow-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 ease-in-out" ref={el => cardsRef.current[index] = el!}>
                             <h3 className="text-xl font-semibold text-center">
-                                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="hover:underline">
                                     {repo.name}
                                 </a>
                             </h3>
                             <p className="mt-2 text-center">{repo.description}</p>
                             <div className="repo-links flex justify-center gap-3 mt-3">
-                                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600 hover:underline">
+                                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
                                     <FaGithub /> GitHub
                                 </a>
                                 {repo.homepage && (
-                                    <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600 hover:underline">
+                                    <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
                                         <FaExternalLinkAlt /> View Project
                                     </a>
                                 )}
