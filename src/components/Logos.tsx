@@ -26,10 +26,10 @@ const Logos: React.FC = () => {
     }, []);
 
     return (
-        <div className="flex justify-center gap-8 text-4xl text-black">
+        <div className="flex justify-center gap-8 text-4xl text-green-500">
             <div className="flex flex-col items-center">
                 <a href="https://github.com/jwt2706" target="_blank" rel="noopener noreferrer" className="icon">
-                    <FaGithub />
+                    <FaGithub className="icon" />
                 </a>
                 <span className="text-sm mt-2">GitHub</span>
             </div>
