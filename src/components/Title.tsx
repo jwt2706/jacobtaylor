@@ -15,7 +15,18 @@ const Title: React.FC = () => {
             });
         });
 
+        const periodicAnimation = () => {
+            const tl = gsap.timeline();
+            letters.forEach((letter, index) => {
+                tl.to(letter, { y: -10, duration: 0.3, ease: "bounce.out" }, index * 0.1)
+                    .to(letter, { y: 0, duration: 0.3, ease: "bounce.out" }, index * 0.1 + 0.3);
+            });
+        };
+
+        const intervalId = setInterval(periodicAnimation, 5000);
+
         return () => {
+            clearInterval(intervalId);
             letters.forEach((letter) => {
                 letter.removeEventListener("mouseenter", () => { });
                 letter.removeEventListener("mouseleave", () => { });

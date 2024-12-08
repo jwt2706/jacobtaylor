@@ -17,7 +17,24 @@ const Logos: React.FC = () => {
             });
         });
 
+        const periodicAnimation = () => {
+            const tl = gsap.timeline();
+            icons.forEach((icon, index) => {
+                tl.to(icon, { y: -10, duration: 0.3, ease: "bounce.out" }, index * 0.1)
+                    .to(icon, { y: 0, duration: 0.3, ease: "bounce.out" }, index * 0.1 + 0.3);
+            });
+        };
+
+        const startPeriodicAnimation = () => {
+            periodicAnimation();
+            const intervalId = setInterval(periodicAnimation, 5000);
+            return intervalId;
+        };
+
+        const timeoutId = setTimeout(startPeriodicAnimation, 6250);
+
         return () => {
+            clearTimeout(timeoutId);
             icons.forEach((icon) => {
                 icon.removeEventListener("mouseenter", () => { });
                 icon.removeEventListener("mouseleave", () => { });
@@ -29,7 +46,7 @@ const Logos: React.FC = () => {
         <div className="flex justify-center gap-8 text-4xl text-green-500">
             <div className="flex flex-col items-center">
                 <a href="https://github.com/jwt2706" target="_blank" rel="noopener noreferrer" className="icon">
-                    <FaGithub className="icon" />
+                    <FaGithub />
                 </a>
                 <span className="text-sm mt-2">GitHub</span>
             </div>
