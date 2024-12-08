@@ -88,7 +88,7 @@ const ProjectFetcher: React.FC = () => {
                 <p className="text-red-500 text-justify">
                     {error}
                     <br />
-                    Sorry... There was a problem fetching the repositories from GitHub. Try refreshing the page. If that doesn't work you can see them by clicking <a href="https://github.com/jwt2706" target="_blank" rel="noopener noreferrer" className="text-green-500 underline">here</a>, or visiting some of my links above.
+                    Sorry... There was a problem fetching the repositories from GitHub. Try refreshing the page. If that doesn't work you can see them on GitHub <a href="https://github.com/jwt2706" target="_blank" rel="noopener noreferrer" className="text-green-500 underline">here</a>, or visiting some of my other links above.
                 </p>
             ) : (
                 <div className="grid grid-cols-1 gap-8 w-full max-w-4xl px-4">
