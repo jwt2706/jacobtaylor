@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollToPlugin);
 
 const Footer: React.FC = () => {
     const scrollToTop = () => {
-        gsap.to(window, { duration: 1, scrollTo: { y: 0, ease: "power2.inOut" } });
+        gsap.to(window, { duration: 1, scrollTo: { y: 0 } });
     };
 
     return (

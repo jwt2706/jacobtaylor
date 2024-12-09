@@ -15,7 +15,7 @@ const Home: React.FC = () => {
       const elements = containerRef.current.querySelectorAll("h2, p, h3, hr, div");
       gsap.fromTo(elements,
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power4.out" }
+        { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power4.out" }
       );
     }
   }, []);

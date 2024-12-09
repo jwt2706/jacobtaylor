@@ -25,13 +25,7 @@ const Logos: React.FC = () => {
             });
         };
 
-        const startPeriodicAnimation = () => {
-            periodicAnimation();
-            const intervalId = setInterval(periodicAnimation, 5000);
-            return intervalId;
-        };
-
-        const timeoutId = setTimeout(startPeriodicAnimation, 6250);
+        const timeoutId = setTimeout(periodicAnimation, 3250);
 
         return () => {
             clearTimeout(timeoutId);

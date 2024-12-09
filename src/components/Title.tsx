@@ -23,10 +23,10 @@ const Title: React.FC = () => {
             });
         };
 
-        const intervalId = setInterval(periodicAnimation, 5000);
+        const timeoutId = setTimeout(periodicAnimation, 2000);
 
         return () => {
-            clearInterval(intervalId);
+            clearTimeout(timeoutId);
             letters.forEach((letter) => {
                 letter.removeEventListener("mouseenter", () => { });
                 letter.removeEventListener("mouseleave", () => { });
