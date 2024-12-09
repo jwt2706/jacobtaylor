@@ -63,13 +63,14 @@ const ProjectFetcher: React.FC = () => {
 
     useEffect(() => {
         cardsRef.current.forEach((card, index) => {
+            const fromDirection = index % 2 === 0 ? { x: -100, opacity: 0 } : { x: 100, opacity: 0 };
             gsap.fromTo(card,
-                { opacity: 0, y: 50, rotationY: 90 },
+                fromDirection,
                 {
+                    x: 0,
                     opacity: 1,
-                    y: 0,
-                    rotationY: 0,
                     duration: 1,
+                    delay: index * 0.2,
                     ease: "power4.out",
                     scrollTrigger: {
                         trigger: card,
@@ -96,13 +97,14 @@ const ProjectFetcher: React.FC = () => {
                 <div className="grid grid-cols-1 gap-8 w-full max-w-4xl px-4">
                     {repos.map((repo, index) => (
                         <a key={repo.id} href={repo.html_url} target="_blank" rel="noopener noreferrer" className="repo bg-white bg-opacity-10 backdrop-blur-lg border border-gray-300 rounded-lg p-6 shadow-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 ease-in-out hover:opacity-100 block" ref={el => cardsRef.current[index] = el!}>
-                            <div className="flex justify-between items-start mb-4">
+                            <div className="flex justify-between items-start ">
                                 <div>
                                     <h3 className="text-2xl font-semibold">
                                         {repo.name}
                                     </h3>
                                     <p className="text-sm text-gray-500">Built with: {languages[repo.id]?.join(", ") || "Loading..."}</p>
-                                    <p className="mb-4">{repo.description}</p>
+                                    <br />
+                                    <p>{repo.description}</p>
                                 </div>
                                 <div className="flex gap-2 text-2xl">
                                     <FaGithub className="hover:scale-125 transition-transform duration-300 ease-in-out" />
