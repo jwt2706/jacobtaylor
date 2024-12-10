@@ -5,24 +5,43 @@ import Title from "./Title";
 import Logos from "./Logos";
 import Intro from "./Intro";
 import Footer from "./Footer";
+import Background from "./Background";
 import gsap from "gsap";
 
 const Home: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (containerRef.current) {
-      const elements = containerRef.current.querySelectorAll("h2, p, h3, hr, div");
+      const elements = containerRef.current.querySelectorAll("h2, p, h3, hr, div:not(.overlay)");
       gsap.fromTo(elements,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power4.out" }
       );
     }
+
+    if (overlayRef.current) {
+      gsap.to(overlayRef.current, {
+        opacity: 0,
+        duration: 1,
+        ease: "power1.out",
+        onComplete: () => {
+          if (overlayRef.current) {
+            overlayRef.current.style.display = "none";
+          }
+        }
+      });
+    }
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-800 flex flex-col items-center overflow-x-hidden" ref={containerRef}>
-      <div className="w-full text-black text-green-500 max-w-2xl px-4">
+    <div className="relative min-h-screen bg-gray-800 flex flex-col items-center overflow-x-hidden" ref={containerRef}>
+      <Background />
+      <div ref={overlayRef} className="overlay absolute inset-0 bg-black flex items-center justify-center z-50">
+        <p className="text-white text-2xl">Loading...</p>
+      </div>
+      <div className="w-full text-black text-green-500 max-w-2xl px-4 z-10">
         <Title />
         <Logos />
         <hr className="my-8 border-t-2 border-green-500 w-full" />

@@ -71,7 +71,7 @@ const ProjectFetcher: React.FC = () => {
                     opacity: 1,
                     duration: 1,
                     delay: index * 0.2,
-                    ease: "power4.out",
+                    ease: "power1.out",
                     scrollTrigger: {
                         trigger: card,
                         start: "top 80%",
