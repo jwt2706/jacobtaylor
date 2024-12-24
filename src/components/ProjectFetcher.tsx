@@ -74,12 +74,11 @@ const ProjectFetcher: React.FC = () => {
                             <a key={repo.id} href={repo.html_url} target="_blank" rel="noopener noreferrer" className="repo bg-white bg-opacity-10 backdrop-blur-lg border border-gray-300 rounded-lg p-6 shadow-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 ease-in-out hover:opacity-100 block" ref={el => cardsRef.current[index] = el!}>
                                 <div className="flex justify-between items-start ">
                                     <div>
-                                        <h3 className="text-2xl font-semibold">
+                                        <h3 className="text-md sm:text-2xl font-semibold">
                                             {repo.name}
                                         </h3>
                                         <p className="text-sm text-gray-500">Built with: {languages[repo.id]?.join(", ") || "Loading..."}</p>
-                                        <br />
-                                        <p>{repo.description}</p>
+                                        <p className="text-left mt-4 text-sm sm:text-lg">{repo.description}</p>
                                     </div>
                                     <div className="flex gap-2 text-2xl">
                                         <FaGithub className="hover:scale-125 transition-transform duration-300 ease-in-out" />
@@ -93,7 +92,7 @@ const ProjectFetcher: React.FC = () => {
                     </div>
                     {repos.length > 0 && (
                         <>
-                            <h3 className="text-center text-xl font-semibold pt-8 pb-4">See more of my projects or reach out:</h3>
+                            <h3 className="text-center text-lg sm:text-xl font-semibold pt-8 pb-4">See more of my projects or reach out:</h3>
                             <Logos />
                         </>
                     )}

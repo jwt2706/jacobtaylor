@@ -83,16 +83,29 @@ const Background: React.FC = () => {
             requestAnimationFrame(smoothScroll);
         }
 
+        function debounce(func: () => void, wait: number) {
+            let timeout: NodeJS.Timeout;
+            return () => {
+                clearTimeout(timeout);
+                timeout = setTimeout(func, wait);
+            };
+        }
+
+        const handleResize = debounce(() => {
+            canvas.width = window.innerWidth;
+            canvas.height = document.body.scrollHeight;
+            init();
+        }, 200);
+
         init();
         animate();
         smoothScroll();
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = document.body.scrollHeight;
-            init();
-        });
+        window.addEventListener('resize', handleResize);
 
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
     return <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: 1 }} />;
