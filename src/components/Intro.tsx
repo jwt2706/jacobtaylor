@@ -8,7 +8,7 @@ const Intro: React.FC = () => {
                 Hey!
             </h3>
             <p className="text-justify mt-4 mb-8">
-                I'm <b>jwt2706</b>, I'm from 🇨🇦 and I like building stuff. I've been programming for about 10 years now. Started out with webdev and robotics, and now I'm venturing more into AI/ML and low level programming. You can check out some of my public project below.
+                I'm <b>jwt2706</b>, I'm from 🇨🇦 and I like building stuff. I've been programming for 10+ years with projects ranging from webdev, to robotics, to AI/ML, and more recently, basic OS dev. You can check out some of my public project below!
                 <br />
                 <br />
                 If you wanna chat, feel free to reach out at <a href="mailto:hey@jwt2706.ca" className="underline bg-slate-950 rounded-md px-1 py-1">hey@jwt2706.ca</a>. :D

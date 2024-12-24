@@ -9,15 +9,10 @@ const Background: React.FC = () => {
         if (!canvas || !ctx) return;
 
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.height = document.body.scrollHeight;
 
         const particlesArray: Particle[] = [];
-        const numberOfParticles = 100;
-        const mouse = {
-            x: null,
-            y: null,
-            radius: 100
-        };
+        const numberOfParticles = 200;
 
         class Particle {
             x: number;
@@ -25,7 +20,9 @@ const Background: React.FC = () => {
             size: number;
             baseX: number;
             baseY: number;
-            density: number;
+            parallax: number;
+            velocityX: number;
+            velocityY: number;
 
             constructor(x: number, y: number, size: number) {
                 this.x = x;
@@ -33,33 +30,9 @@ const Background: React.FC = () => {
                 this.size = size;
                 this.baseX = x;
                 this.baseY = y;
-                this.density = Math.random() * 30 + 1;
-            }
-
-            update() {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                let forceDirectionX = dx / distance;
-                let forceDirectionY = dy / distance;
-                let maxDistance = mouse.radius;
-                let force = (maxDistance - distance) / maxDistance;
-                let directionX = forceDirectionX * force * this.density;
-                let directionY = forceDirectionY * force * this.density;
-
-                if (distance < mouse.radius) {
-                    this.x -= directionX;
-                    this.y -= directionY;
-                } else {
-                    if (this.x !== this.baseX) {
-                        let dx = this.x - this.baseX;
-                        this.x -= dx / 10;
-                    }
-                    if (this.y !== this.baseY) {
-                        let dy = this.y - this.baseY;
-                        this.y -= dy / 10;
-                    }
-                }
+                this.parallax = Math.random() * 0.2 + 0.1;
+                this.velocityX = (Math.random() - 0.5) * 0.2;
+                this.velocityY = (Math.random() - 0.5) * 0.2;
             }
 
             draw() {
@@ -68,6 +41,15 @@ const Background: React.FC = () => {
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
                 ctx.fill();
             }
+
+            update() {
+                this.x += this.velocityX;
+                this.y += this.velocityY;
+
+                // Reverse direction if out of bounds
+                if (this.x < 0 || this.x > canvas.width) this.velocityX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.velocityY *= -1;
+            }
         }
 
         function init() {
@@ -75,7 +57,7 @@ const Background: React.FC = () => {
             for (let i = 0; i < numberOfParticles; i++) {
                 const size = Math.random() * 2 + 1;
                 const x = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
+                const y = Math.random() * (document.body.scrollHeight + window.innerHeight) - window.innerHeight / 2; // Random y position including above the viewport
                 particlesArray.push(new Particle(x, y, size));
             }
         }
@@ -89,24 +71,28 @@ const Background: React.FC = () => {
             requestAnimationFrame(animate);
         }
 
+        function handleScroll() {
+            const scrollY = window.scrollY;
+            particlesArray.forEach(particle => {
+                particle.y = particle.baseY + scrollY * particle.parallax;
+            });
+        }
+
+        function smoothScroll() {
+            handleScroll();
+            requestAnimationFrame(smoothScroll);
+        }
+
         init();
         animate();
+        smoothScroll();
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            canvas.height = document.body.scrollHeight;
             init();
         });
 
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
     }, []);
 
     return <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: 1 }} />;

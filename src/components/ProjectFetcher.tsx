@@ -1,9 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface Repo {
     id: number;
@@ -61,35 +57,13 @@ const ProjectFetcher: React.FC = () => {
             });
     }, []);
 
-    useEffect(() => {
-        cardsRef.current.forEach((card, index) => {
-            const fromDirection = index % 2 === 0 ? { x: -100, opacity: 0 } : { x: 100, opacity: 0 };
-            gsap.fromTo(card,
-                fromDirection,
-                {
-                    x: 0,
-                    opacity: 1,
-                    duration: 1,
-                    delay: index * 0.2,
-                    ease: "power1.out",
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 80%",
-                        end: "bottom 60%",
-                        toggleActions: "play none none none"
-                    }
-                }
-            );
-        });
-    }, [repos]);
-
     return (
         <div className="flex flex-col items-center">
             {loading ? (
                 <p className="text-blue-500">Loading...</p>
             ) : error ? (
                 <p className="text-red-500 text-justify">
-                    {error}
+                    Error:{error}
                     <br />
                     Sorry... There was a problem fetching the repositories from GitHub. Try refreshing the page. If that doesn't work you can see them by clicking <a href="https://github.com/jwt2706" target="_blank" rel="noopener noreferrer" className="text-green-500 underline">here</a>, or visiting some of my links above.
                 </p>

@@ -17,7 +17,7 @@ const Home: React.FC = () => {
       const elements = containerRef.current.querySelectorAll("h2, p, h3, hr, div:not(.overlay)");
       gsap.fromTo(elements,
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power4.out" }
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power4.out" }
       );
     }
 
@@ -36,7 +36,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-gray-800 flex flex-col items-center overflow-x-hidden" ref={containerRef}>
+    <div className="relative min-h-screen bg-gray-900 flex flex-col items-center overflow-x-hidden" ref={containerRef}>
       <Background />
       <div ref={overlayRef} className="overlay absolute inset-0 bg-black flex items-center justify-center z-50">
         <p className="text-white text-2xl">Loading...</p>
