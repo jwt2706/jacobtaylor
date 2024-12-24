@@ -48,7 +48,7 @@ const Home: React.FC = () => {
 				<Intro />
 				<hr className="my-8 border-t-2 border-green-500 w-full" />
 				<div className="font-bold mb-8 text-center">
-					<h2 className="text-xl sm:text-2xl">Here are a few of my projects:</h2>
+					<h3 className="text-xl sm:text-2xl">Here are a few of my projects:</h3>
 					<div className="text-sm flex items-center justify-center space-x-2">
 						<p className="animate-bounce">↓</p>
 						<p>scroll down</p>
