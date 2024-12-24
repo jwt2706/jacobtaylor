@@ -10,12 +10,10 @@ const Footer: React.FC = () => {
     };
 
     return (
-        <footer className="text-white my-8 rounded-lg">
+        <footer className="text-white mt-8 mb-2 rounded-lg">
             <div className="container mx-auto text-center">
                 <p>&copy; {new Date().getFullYear()} jwt2706. All rights reserved.</p>
-                <p>
-                    <button onClick={scrollToTop} className="text-green-500 hover:underline cursor-pointer bg-transparent border-none p-0">Back to top</button>
-                </p>
+                <button onClick={scrollToTop} className="text-green-500 hover:underline cursor-pointer bg-transparent border-none p-0">Back to top</button>
             </div>
         </footer>
     );
