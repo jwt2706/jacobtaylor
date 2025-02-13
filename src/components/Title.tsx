@@ -36,7 +36,7 @@ const Title: React.FC = () => {
 
     return (
         <h1 className="text-5xl sm:text-8xl font-bold text-center my-8">
-            {Array.from("jwt2706.ca").map((char, index) => (
+            {Array.from("jthome.net").map((char, index) => (
                 <span key={index} className="animated-letter inline-block">
                     {char}
                 </span>
