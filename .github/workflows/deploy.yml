@@ -22,7 +22,7 @@ jobs:
         run: npm run build
 
       - name: Create CNAME file
-        run: echo 'jwt2706.ca' > ./dist/CNAME
+        run: echo 'jthome.net' > ./dist/CNAME
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
