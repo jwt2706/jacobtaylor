@@ -63,7 +63,7 @@ const Logos: React.FC = () => {
                 <span className="text-sm mt-2">Devpost</span>
             </div>
             <div className="flex flex-col items-center">
-                <a href="mailto:hey@jwt2706.ca" className="icon" aria-label="Email">
+                <a href="mailto:hey@jthome.net" className="icon" aria-label="Email">
                     <FaEnvelope />
                 </a>
                 <span className="text-sm mt-2">Email</span>
